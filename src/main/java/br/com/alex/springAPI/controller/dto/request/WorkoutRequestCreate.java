@@ -5,12 +5,13 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
 import java.util.Set;
+import java.util.UUID;
 
 @Builder
 public record WorkoutRequestCreate(
     @NotBlank String name,
     @NotBlank String objective,
     @NotNull Long studentId,
-    @NotNull Set<Long> exercises
+    @NotNull Set<UUID> exercises
 ) {
 }

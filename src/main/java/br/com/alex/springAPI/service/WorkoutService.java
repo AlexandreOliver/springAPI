@@ -1,10 +1,10 @@
 package br.com.alex.springAPI.service;
 
 import br.com.alex.springAPI.controller.dto.request.WorkoutRequestCreate;
-import br.com.alex.springAPI.database.model.Exercise;
-import br.com.alex.springAPI.database.model.Student;
-import br.com.alex.springAPI.database.model.Workout;
-import br.com.alex.springAPI.database.repository.IExerciseRepository;
+import br.com.alex.springAPI.infrastructure.persistence.entity.ExerciseEntity;
+import br.com.alex.springAPI.database.entity.Student;
+import br.com.alex.springAPI.database.entity.Workout;
+import br.com.alex.springAPI.infrastructure.persistence.IExerciseEntityRepository;
 import br.com.alex.springAPI.database.repository.IStudentRepository;
 import br.com.alex.springAPI.database.repository.IWorkoutRepository;
 import br.com.alex.springAPI.exception.NotFoundExpection;
@@ -21,14 +21,14 @@ public class WorkoutService {
 
     private final IWorkoutRepository workoutRepository;
     private final IStudentRepository studentRepository;
-    private final IExerciseRepository exerciseRepository;
+    private final IExerciseEntityRepository exerciseRepository;
 
     public void create(WorkoutRequestCreate workoutDto) {
       Student student = this.studentRepository
           .findById(workoutDto.studentId())
           .orElseThrow(() -> new NotFoundExpection("O Aluno não existe", Optional.of("Verifique o campo studentId")));
 
-      Set<Exercise> exercicies = new HashSet<>(this.exerciseRepository.findAllById(workoutDto.exercises()));
+      Set<ExerciseEntity> exercicies = new HashSet<>(this.exerciseRepository.findAllById(workoutDto.exercises()));
 
       System.out.println(workoutDto.objective());
 

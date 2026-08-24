@@ -1,12 +1,10 @@
 package br.com.alex.springAPI.service;
 
-import br.com.alex.springAPI.controller.dto.request.ExerciseRequestPatch;
 import br.com.alex.springAPI.controller.dto.request.StudentRequestCreate;
 import br.com.alex.springAPI.controller.dto.response.*;
-import br.com.alex.springAPI.database.model.PhisicalAssessment;
-import br.com.alex.springAPI.database.model.Student;
-import br.com.alex.springAPI.database.model.Workout;
-import br.com.alex.springAPI.database.repository.IPhisicalAssessmentRepository;
+import br.com.alex.springAPI.database.entity.PhisicalAssessment;
+import br.com.alex.springAPI.database.entity.Student;
+import br.com.alex.springAPI.database.entity.Workout;
 import br.com.alex.springAPI.database.repository.IWorkoutRepository;
 import br.com.alex.springAPI.exception.BadRequestException;
 import br.com.alex.springAPI.database.repository.IStudentRepository;
@@ -17,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -97,18 +94,5 @@ public class StudentService {
 
     this.studentRepository.deleteById(id);
 
-  }
-
-
-  private void validDtoNull(ExerciseRequestPatch dto) {
-    if (dto.nome() == null &&
-        dto.equipament() == null &&
-        dto.grupoMuscular() == null &&
-        dto.difficultLevel() == null) {
-
-      throw new BadRequestException(
-          "A requisição deve conter pelo menos um campo para atualização."
-      );
-    }
   }
 }

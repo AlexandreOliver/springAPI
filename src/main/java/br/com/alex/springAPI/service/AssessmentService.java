@@ -2,8 +2,8 @@ package br.com.alex.springAPI.service;
 
 
 import br.com.alex.springAPI.controller.dto.request.AssessmentRequestCreate;
-import br.com.alex.springAPI.database.model.PhisicalAssessment;
-import br.com.alex.springAPI.database.model.Student;
+import br.com.alex.springAPI.database.entity.PhisicalAssessment;
+import br.com.alex.springAPI.database.entity.Student;
 import br.com.alex.springAPI.database.repository.IPhisicalAssessmentRepository;
 import br.com.alex.springAPI.database.repository.IStudentRepository;
 import br.com.alex.springAPI.exception.DuplicatedAssessmentError;

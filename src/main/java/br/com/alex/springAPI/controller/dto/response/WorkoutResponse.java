@@ -1,6 +1,6 @@
 package br.com.alex.springAPI.controller.dto.response;
 
-import br.com.alex.springAPI.database.model.Student;
+import br.com.alex.springAPI.database.entity.Student;
 import lombok.Builder;
 
 import java.util.Set;

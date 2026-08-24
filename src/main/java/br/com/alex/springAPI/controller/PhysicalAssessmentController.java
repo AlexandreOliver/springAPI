@@ -1,7 +1,7 @@
 package br.com.alex.springAPI.controller;
 
 import br.com.alex.springAPI.controller.dto.request.AssessmentRequestCreate;
-import br.com.alex.springAPI.handler.OnlyMessageResponse;
+import br.com.alex.springAPI.infrastructure.http.handler.OnlyMessageResponse;
 import br.com.alex.springAPI.service.AssessmentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -1,9 +1,7 @@
 package br.com.alex.springAPI.database.repository;
 
-import br.com.alex.springAPI.database.model.Workout;
-import br.com.alex.springAPI.database.projetion.WorkoutsOwnStudentProjection;
+import br.com.alex.springAPI.database.entity.Workout;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.web.ProjectedPayload;
 
 import java.util.List;
 
