@@ -1,8 +1,9 @@
 package br.com.alex.springAPI.application.usecases;
 
 import br.com.alex.springAPI.application.input.UpdateExerciseInput;
+import br.com.alex.springAPI.domain.interfaces.IRepositoryDomain;
 import br.com.alex.springAPI.application.output.ExerciseOutput;
-import br.com.alex.springAPI.application.interfaces.IExerciseRepository;
+import br.com.alex.springAPI.domain.Exercise;
 import br.com.alex.springAPI.domain.valueObjects.ExerciseId;
 import br.com.alex.springAPI.exception.NotFoundExpection;
 import lombok.AllArgsConstructor;
@@ -14,7 +15,7 @@ import java.util.Optional;
 @Service
 public class UpdateExerciseUseCase {
 
-  private final IExerciseRepository exerciseRepository;
+  private final IRepositoryDomain<Exercise, ExerciseId> exerciseRepository;
 
 
   public ExerciseOutput execute(UpdateExerciseInput exerciseInput, ExerciseId id) {
@@ -27,7 +28,7 @@ public class UpdateExerciseUseCase {
 
     var exerciseSalved = exerciseRepository.save(exerciseInDb);
 
-    return ExerciseOutput.from(exerciseSalved);
+    return ExerciseOutput.of(exerciseSalved);
   }
 
 }

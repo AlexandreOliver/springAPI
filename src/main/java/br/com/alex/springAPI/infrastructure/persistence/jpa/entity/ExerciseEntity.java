@@ -1,4 +1,4 @@
-package br.com.alex.springAPI.infrastructure.persistence.entity;
+package br.com.alex.springAPI.infrastructure.persistence.jpa.entity;
 
 import br.com.alex.springAPI.domain.Exercise;
 import br.com.alex.springAPI.domain.valueObjects.ExerciseId;

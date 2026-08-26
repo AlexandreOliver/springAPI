@@ -1,7 +1,8 @@
 package br.com.alex.springAPI.application.usecases;
 
+import br.com.alex.springAPI.domain.interfaces.IRepositoryDomain;
 import br.com.alex.springAPI.application.output.ExerciseOutput;
-import br.com.alex.springAPI.application.interfaces.IExerciseRepository;
+import br.com.alex.springAPI.domain.Exercise;
 import br.com.alex.springAPI.domain.valueObjects.ExerciseId;
 import br.com.alex.springAPI.exception.NotFoundExpection;
 import lombok.AllArgsConstructor;
@@ -13,7 +14,7 @@ import java.util.Optional;
 @Service
 public class GetByIdExerciseUseCase {
 
-  private final IExerciseRepository exerciseRepository;
+  private final IRepositoryDomain<Exercise, ExerciseId> exerciseRepository;
 
 
   public ExerciseOutput execute(ExerciseId id) {
@@ -22,6 +23,6 @@ public class GetByIdExerciseUseCase {
         .findById(id).orElseThrow(() -> new NotFoundExpection("Não há exercisios com o id fornecido", Optional.of("Forneça outro Id")));
 
 
-    return ExerciseOutput.from(exerciseInDb);
+    return ExerciseOutput.of(exerciseInDb);
   }
 }

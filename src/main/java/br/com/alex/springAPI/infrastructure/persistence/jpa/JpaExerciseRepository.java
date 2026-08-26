@@ -1,9 +1,9 @@
-package br.com.alex.springAPI.infrastructure.persistence;
+package br.com.alex.springAPI.infrastructure.persistence.jpa;
 
-import br.com.alex.springAPI.infrastructure.persistence.entity.ExerciseEntity;
+import br.com.alex.springAPI.domain.interfaces.IExerciseRepository;
 import br.com.alex.springAPI.domain.Exercise;
-import br.com.alex.springAPI.application.interfaces.IExerciseRepository;
 import br.com.alex.springAPI.domain.valueObjects.ExerciseId;
+import br.com.alex.springAPI.infrastructure.persistence.jpa.entity.ExerciseEntity;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;

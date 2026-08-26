@@ -1,4 +1,4 @@
-package br.com.alex.springAPI.database.entity;
+package br.com.alex.springAPI.infrastructure.persistence.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PhisicalAssessment {
+public class PhisicalAssessmentEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

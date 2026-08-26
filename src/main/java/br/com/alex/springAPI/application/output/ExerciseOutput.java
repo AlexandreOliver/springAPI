@@ -12,7 +12,7 @@ public record ExerciseOutput(
     int difficultLevel
 ) {
 
-  public static ExerciseOutput from(Exercise exercise) {
+  public static ExerciseOutput of(Exercise exercise) {
     return new ExerciseOutput(
         exercise.getId().id(),
         exercise.getName(),
