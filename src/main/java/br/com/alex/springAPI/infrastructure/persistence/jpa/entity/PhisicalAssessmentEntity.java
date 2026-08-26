@@ -1,5 +1,8 @@
-package br.com.alex.springAPI.infrastructure.persistence.entity;
+package br.com.alex.springAPI.infrastructure.persistence.jpa.entity;
 
+import br.com.alex.springAPI.domain.PhisicialAssessment;
+import br.com.alex.springAPI.domain.valueObjects.PhisicalAssessmentId;
+import br.com.alex.springAPI.domain.valueObjects.Price;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
@@ -19,16 +23,34 @@ import java.math.BigDecimal;
 public class PhisicalAssessmentEntity {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private UUID id;
 
   @Column(nullable = false)
-  private BigDecimal preco;
+  private Integer preco;
 
   @Column(nullable = false)
   private BigDecimal altura;
 
   @Column(nullable = false, name = "percent_body_fat")
   private BigDecimal percentBodyFat;
+
+  public static PhisicalAssessmentEntity from(PhisicialAssessment assessment) {
+    return PhisicalAssessmentEntity.builder()
+        .id(assessment.getId().uuid())
+        .preco(assessment.getPreco().inCents())
+        .altura(new BigDecimal(assessment.getAltura()))
+        .percentBodyFat(new BigDecimal(assessment.getPercentBodyFat()))
+        .build();
+  }
+
+  public PhisicialAssessment toDomain() {
+    return PhisicialAssessment.builder()
+        .id(new PhisicalAssessmentId(this.id))
+        .altura(this.altura.doubleValue())
+        .preco(Price.ofCents(this.preco.longValue()))
+        .percentBodyFat(this.percentBodyFat.doubleValue())
+        .build();
+  }
+
 
 }
