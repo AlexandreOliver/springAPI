@@ -13,4 +13,6 @@ public interface IStudentRepository extends IRepositoryDomain<Student, StudentId
   Optional<Student> findByIdWithAssessment(StudentId id);
 
   List<Student> findAllWithAssessment();
+
+  boolean existsByStudentId(StudentId id);
 }
