@@ -6,6 +6,7 @@ import br.com.alex.springAPI.domain.valueObjects.StudentId;
 
 import br.com.alex.springAPI.infrastructure.persistence.jpa.entity.StudentEntity;
 
+import br.com.alex.springAPI.infrastructure.persistence.jpa.interfaces.IStudentEntityRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 

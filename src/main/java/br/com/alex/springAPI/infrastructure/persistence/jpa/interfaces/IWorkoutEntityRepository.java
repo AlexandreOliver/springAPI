@@ -1,4 +1,4 @@
-package br.com.alex.springAPI.infrastructure.persistence.jpa;
+package br.com.alex.springAPI.infrastructure.persistence.jpa.interfaces;
 
 import br.com.alex.springAPI.infrastructure.persistence.jpa.entity.WorkoutEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

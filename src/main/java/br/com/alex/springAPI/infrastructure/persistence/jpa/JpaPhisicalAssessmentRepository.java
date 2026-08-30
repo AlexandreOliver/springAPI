@@ -6,6 +6,7 @@ import br.com.alex.springAPI.domain.valueObjects.PhisicalAssessmentId;
 
 import br.com.alex.springAPI.infrastructure.persistence.jpa.entity.PhisicalAssessmentEntity;
 
+import br.com.alex.springAPI.infrastructure.persistence.jpa.interfaces.IPhisicalAssessmentEntityRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 

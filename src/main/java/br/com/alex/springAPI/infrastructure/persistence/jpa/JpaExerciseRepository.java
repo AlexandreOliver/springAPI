@@ -4,6 +4,7 @@ import br.com.alex.springAPI.domain.interfaces.IExerciseRepository;
 import br.com.alex.springAPI.domain.Exercise;
 import br.com.alex.springAPI.domain.valueObjects.ExerciseId;
 import br.com.alex.springAPI.infrastructure.persistence.jpa.entity.ExerciseEntity;
+import br.com.alex.springAPI.infrastructure.persistence.jpa.interfaces.IExerciseEntityRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;

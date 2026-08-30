@@ -8,6 +8,7 @@ import br.com.alex.springAPI.domain.valueObjects.WorkoutId;
 import br.com.alex.springAPI.infrastructure.persistence.jpa.entity.StudentEntity;
 import br.com.alex.springAPI.infrastructure.persistence.jpa.entity.WorkoutEntity;
 
+import br.com.alex.springAPI.infrastructure.persistence.jpa.interfaces.IWorkoutEntityRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
