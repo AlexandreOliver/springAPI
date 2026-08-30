@@ -1,13 +1,18 @@
 package br.com.alex.springAPI.infrastructure.persistence.jpa.entity;
 
 
+import br.com.alex.springAPI.domain.Workout;
+import br.com.alex.springAPI.domain.valueObjects.WorkoutId;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
@@ -16,10 +21,9 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 @Data
-public class Workout {
+public class WorkoutEntity {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private UUID id;
 
   @Column(name = "name", nullable = false)
@@ -30,9 +34,9 @@ public class Workout {
 
   @ManyToOne
   @JoinColumn(name = "student_id")
-  private Student student;
+  private StudentEntity student;
 
-  @ManyToMany
+  @ManyToMany(cascade = CascadeType.PERSIST)
   @JoinTable(
     name = "execise_workout",
       joinColumns = @JoinColumn(name = "workout_id"),
@@ -41,4 +45,26 @@ public class Workout {
   private Set<ExerciseEntity> exercises = new HashSet<>();
 
 
+  public static WorkoutEntity from(Workout workout) {
+    var building = WorkoutEntity
+        .builder()
+        .id(workout.getId().id())
+        .name(workout.getName())
+        .objective(workout.getObjective());
+
+    if (Objects.nonNull(workout.getExercises())) {
+      building.exercises(workout.getExercises().stream().map(ExerciseEntity::from).collect(Collectors.toSet()));
+    }
+
+    return building.build();
+  }
+
+  public Workout toDomain() {
+    return Workout.builder()
+        .id(new WorkoutId(this.id))
+        .name(this.name)
+        .objective(this.objective)
+        .exercises(this.exercises.stream().map(ExerciseEntity::toDomain).collect(Collectors.toSet()))
+        .build();
+  }
 }

@@ -18,4 +18,7 @@ public interface IStudentEntityRepository extends JpaRepository<StudentEntity, U
 
   @Query("SELECT s FROM StudentEntity s LEFT JOIN FETCH s.assessment")
   List<StudentEntity> findAllWithAssessment();
+
+  @Override
+  boolean existsById(UUID id);
 }

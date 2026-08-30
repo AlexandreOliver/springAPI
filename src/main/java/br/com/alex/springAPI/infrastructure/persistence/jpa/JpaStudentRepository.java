@@ -1,12 +1,11 @@
 package br.com.alex.springAPI.infrastructure.persistence.jpa;
 
-import br.com.alex.springAPI.application.exception.NotFoundError;
-import br.com.alex.springAPI.domain.PhisicalAssessment;
 import br.com.alex.springAPI.domain.Student;
 import br.com.alex.springAPI.domain.interfaces.IStudentRepository;
 import br.com.alex.springAPI.domain.valueObjects.StudentId;
+
 import br.com.alex.springAPI.infrastructure.persistence.jpa.entity.StudentEntity;
-import jakarta.persistence.EntityNotFoundException;
+
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -60,4 +59,10 @@ public class JpaStudentRepository implements IStudentRepository {
 
     return this.studentEntityRepository.findByEmail(email).map(StudentEntity::toDomain);
   }
+
+  @Override
+  public boolean existsByStudentId(StudentId id) {
+    return this.studentEntityRepository.existsById(id.uuid());
+  }
+
 }
