@@ -2,6 +2,7 @@ package br.com.alex.springAPI.infrastructure.http.controllers;
 
 import br.com.alex.springAPI.domain.valueObjects.StudentId;
 
+import br.com.alex.springAPI.application.output.WorkoutOutput;
 import br.com.alex.springAPI.application.exception.DuplicatedAssessmentError;
 import br.com.alex.springAPI.application.exception.DuplicatedEmail;
 import br.com.alex.springAPI.application.exception.NotFoundError;
@@ -9,8 +10,10 @@ import br.com.alex.springAPI.application.output.AssessmentOutput;
 import br.com.alex.springAPI.application.output.StudentOutput;
 import br.com.alex.springAPI.application.usecases.*;
 
+import br.com.alex.springAPI.infrastructure.http.exception.BadRequestException;
 import br.com.alex.springAPI.infrastructure.http.exception.UnprocessableEntityException;
 import br.com.alex.springAPI.infrastructure.http.request.AssessmentRequestCreate;
+import br.com.alex.springAPI.infrastructure.http.request.WorkoutCreate;
 import br.com.alex.springAPI.infrastructure.http.response.StudentSummaryResponse;
 import br.com.alex.springAPI.infrastructure.http.exception.NotFoundExpection;
 import br.com.alex.springAPI.infrastructure.http.handler.OnlyMessageResponse;
@@ -36,6 +39,8 @@ public class StudentController {
   private final GetByIdStudentUseCase getByIdUseCase;
   private final DeleteStudentUseCase deleteUseCase;
   private final CreateAssessmentUseCase createAssessmentUseCase;
+  private final CreateWorkoutUseCase createWorkoutUseCase;
+  private final GetWorkoutByStudentIdUseCase workoutByStudentIdUseCase;
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
@@ -64,6 +69,29 @@ public class StudentController {
    }
  }
 
+  @GetMapping("/{id}")
+  @ResponseStatus(HttpStatus.OK)
+  public ResponseEntity<?> GET_STUDENT(@PathVariable UUID id, @RequestParam(required = false) String include) {
+    try {
+      if ("assessment".equalsIgnoreCase(include)) {
+        return ResponseEntity.ok(this.getByIdUseCase.execute(new StudentId(id), true));
+      } else {
+        StudentOutput studentOutput = this.getByIdUseCase.execute(new StudentId(id), false);
+
+        return ResponseEntity.ok(StudentSummaryResponse.of(studentOutput));
+      }
+
+    } catch (NotFoundError ex) {
+      throw new NotFoundExpection(ex.getMessage(), Optional.of("Crie."));
+    }
+  }
+
+  @DeleteMapping("/{id}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void DELETE(@PathVariable UUID id) {
+    this.deleteUseCase.execute(new StudentId(id));
+  }
+
   @GetMapping("/{id}/assessment")
   @ResponseStatus(HttpStatus.OK)
   public AssessmentOutput GET_ASSESSMENT(@PathVariable UUID id) {
@@ -85,7 +113,7 @@ public class StudentController {
 
   @PostMapping("/{id}/assessment")
   @ResponseStatus(HttpStatus.OK)
-  public OnlyMessageResponse POST_ASSESSMENT(@PathVariable UUID id, @RequestBody AssessmentRequestCreate requestBody) {
+  public OnlyMessageResponse POST_ASSESSMENT(@PathVariable UUID id, @Valid @RequestBody AssessmentRequestCreate requestBody) {
 
    try {
      this.createAssessmentUseCase.execute(requestBody.toInput(), new StudentId(id));
@@ -98,26 +126,36 @@ public class StudentController {
     return new OnlyMessageResponse("Exame adicionado com sucesso");
   }
 
-  @GetMapping("/{id}")
-  @ResponseStatus(HttpStatus.OK)
-  public ResponseEntity<?> GET_STUDENT(@PathVariable UUID id, @RequestParam(required = false) String include) {
+  @PostMapping("/{id}/workout")
+  @ResponseStatus(HttpStatus.CREATED)
+  public OnlyMessageResponse POST_WORKOUT(@Valid @RequestBody WorkoutCreate workoutCreate, @PathVariable UUID id) {
+
    try {
-      if ("assessment".equalsIgnoreCase(include)) {
-        return ResponseEntity.ok(this.getByIdUseCase.execute(new StudentId(id), true));
-      } else {
-        StudentOutput studentOutput = this.getByIdUseCase.execute(new StudentId(id), false);
+     this.createWorkoutUseCase.execute(workoutCreate.toInput(id));
+   } catch (NotFoundError e) {
+     throw new NotFoundExpection(e.getMessage(), Optional.of("Corrija o Requisição"));
+   }
 
-        return ResponseEntity.ok(StudentSummaryResponse.of(studentOutput));
-      }
+   return new OnlyMessageResponse("Treino criado com Sucesso");
 
-    } catch (NotFoundError ex) {
-      throw new NotFoundExpection(ex.getMessage(), Optional.of("Crie."));
-    }
   }
 
-  @DeleteMapping("/{id}")
-  @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void DELETE(@PathVariable UUID id) {
-    this.deleteUseCase.execute(new StudentId(id));
+  @GetMapping("/{id}/workout")
+  @ResponseStatus(HttpStatus.OK)
+  public List<WorkoutOutput> GET_WORKOUT(@PathVariable UUID id, @RequestParam(required = false) String include) {
+
+   try {
+
+     if ("exercises".equalsIgnoreCase(include)) {
+       return this.workoutByStudentIdUseCase.execute(new StudentId(id), true);
+     } else {
+       return this.workoutByStudentIdUseCase.execute(new StudentId(id), false);
+     }
+   } catch (NotFoundError e) {
+     throw new BadRequestException(e.getMessage(), "Corrija a request");
+   }
+
+
   }
- }
+
+}
