@@ -1,5 +1,7 @@
 package br.com.alex.springAPI.infrastructure.persistence.jpa.entity;
 
+import br.com.alex.springAPI.domain.Student;
+import br.com.alex.springAPI.domain.valueObjects.StudentId;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,10 +17,9 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 @Data
-public class Student {
+public class StudentEntity {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private UUID id;
 
   @Column(nullable = false)
@@ -32,7 +33,36 @@ public class Student {
   private PhisicalAssessmentEntity assessment;
 
   @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  private Set<Workout> workouts = new HashSet<>();
+  private Set<WorkoutEntity> workouts = new HashSet<>();
+
+  public static StudentEntity from(Student student) {
+
+    var studentEntity = StudentEntity
+        .builder()
+        .id(student.getId().uuid())
+        .name(student.getName())
+        .email(student.getEmail());
+
+    if (student.getPhisicalAssessment() != null) {
+      studentEntity.assessment(PhisicalAssessmentEntity.from(student.getPhisicalAssessment()));
+    }
+
+    return studentEntity.build();
+  }
+
+  public Student toDomain() {
+
+    var StudentDomain = Student.builder()
+        .id(new StudentId(this.id))
+        .name(this.name)
+        .email(this.email);
+
+    if (this.assessment != null) {
+      StudentDomain.phisicalAssessment(this.assessment.toDomain());
+    }
+
+    return StudentDomain.build();
+  }
 }
 
 
