@@ -1,17 +1,16 @@
-package br.com.alex.springAPI.infrastructure.http.exception;
+package br.com.alex.springAPI.application.exception;
 
+import br.com.alex.springAPI.application.input.CreatePhisicalAssessmentInput;
 import lombok.Getter;
-import org.springframework.http.HttpStatus;
 
 @Getter
-public class DuplicatedAssessmentError extends RuntimeException {
-    private final HttpStatus statusCode;
-    private final String name;
+public class DuplicatedAssessmentError extends ApplicationError {
+    public CreatePhisicalAssessmentInput input;
     
-    public DuplicatedAssessmentError(String message) {
-        super(message);
-        
-        this.name = "DuplicatedAssessmentError";
-        this.statusCode = HttpStatus.BAD_REQUEST;
+    public DuplicatedAssessmentError(String message, CreatePhisicalAssessmentInput input) {
+        super("DuplicatedAssessmentError", message);
+
+        this.input = input;
+
     }
 }
