@@ -2,11 +2,13 @@ package br.com.alex.springAPI.infrastructure.http.controllers;
 
 import br.com.alex.springAPI.application.output.ExerciseOutput;
 import br.com.alex.springAPI.application.usecases.*;
+
 import br.com.alex.springAPI.domain.valueObjects.ExerciseId;
+
 import br.com.alex.springAPI.infrastructure.http.request.ExerciseCreate;
 import br.com.alex.springAPI.infrastructure.http.request.ExercisePatch;
+import br.com.alex.springAPI.infrastructure.http.exception.NotFoundExpection;
 
-import br.com.alex.springAPI.exception.NotFoundExpection;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

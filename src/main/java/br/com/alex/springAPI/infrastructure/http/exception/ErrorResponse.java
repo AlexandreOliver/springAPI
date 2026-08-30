@@ -1,4 +1,4 @@
-package br.com.alex.springAPI.exception;
+package br.com.alex.springAPI.infrastructure.http.exception;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;

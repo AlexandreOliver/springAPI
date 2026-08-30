@@ -1,6 +1,7 @@
 package br.com.alex.springAPI.infrastructure.http.handler;
 
-import br.com.alex.springAPI.exception.*;
+import br.com.alex.springAPI.application.exception.DuplicatedAssessmentError;
+import br.com.alex.springAPI.infrastructure.http.exception.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -74,7 +74,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 
-    @ExceptionHandler({BadRequestException.class, DuplicatedAssessmentError.class})
+    @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<ErrorResponse> handlerException(BadRequestException ex) {
 
         ErrorResponse response = ErrorResponse
@@ -82,6 +82,20 @@ public class GlobalExceptionHandler {
             .name(ex.getName())
             .message(ex.getMessage())
             .status(ex.getStatusCode())
+            .build();
+
+        return ResponseEntity.status(ex.getStatusCode()).body(response);
+    }
+
+    @ExceptionHandler(UnprocessableEntityException.class)
+    public ResponseEntity<ErrorResponse> handlerException(UnprocessableEntityException ex) {
+
+        ErrorResponse response = ErrorResponse
+            .builder()
+            .name(ex.getName())
+            .message(ex.getMessage())
+            .status(ex.getStatusCode())
+            .action(ex.getAction())
             .build();
 
         return ResponseEntity.status(ex.getStatusCode()).body(response);

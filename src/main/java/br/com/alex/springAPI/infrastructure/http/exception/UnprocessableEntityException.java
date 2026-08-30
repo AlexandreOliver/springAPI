@@ -4,18 +4,18 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 @Getter
-public class BadRequestException extends RuntimeException {
+public class UnprocessableEntityException extends RuntimeException {
 
   private String name;
   private Integer statusCode;
   private String action;
 
-  public BadRequestException(String message, String action) {
+  public UnprocessableEntityException(String message, String action) {
 
     super(message);
 
-    this.name = "BadRequestError";
-    this.statusCode = HttpStatus.BAD_REQUEST.value();
+    this.name = "UnprocessableEntityError";
+    this.statusCode = HttpStatus.UNPROCESSABLE_CONTENT.value();
     this.action = action;
   }
 }
