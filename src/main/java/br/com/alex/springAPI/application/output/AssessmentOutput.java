@@ -1,13 +1,24 @@
-package br.com.alex.springAPI.controller.dto.response;
+package br.com.alex.springAPI.application.output;
 
+import br.com.alex.springAPI.domain.PhisicalAssessment;
 import lombok.Builder;
 
-import java.math.BigDecimal;
+import java.util.UUID;
 
 @Builder
-public record AssessmentResponse(
-    Long id,
-    BigDecimal preco,
-    BigDecimal altura,
-    BigDecimal percentBodyFat
-) { }
+public record AssessmentOutput(
+    UUID id,
+    String preco,
+    double altura,
+    double percentBodyFat
+) {
+
+  public static AssessmentOutput of(PhisicalAssessment assessment) {
+    return AssessmentOutput.builder()
+        .id(assessment.getId().uuid())
+        .preco(assessment.getPreco().amount().toString())
+        .altura(assessment.getAltura())
+        .percentBodyFat(assessment.getPercentBodyFat())
+        .build();
+  }
+}
