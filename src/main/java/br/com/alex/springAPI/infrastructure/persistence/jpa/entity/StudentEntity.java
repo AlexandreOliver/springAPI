@@ -1,4 +1,4 @@
-package br.com.alex.springAPI.database.entity;
+package br.com.alex.springAPI.infrastructure.persistence.jpa.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
@@ -18,7 +19,7 @@ public class Student {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private UUID id;
 
   @Column(nullable = false)
   private String name;
@@ -28,7 +29,7 @@ public class Student {
 
   @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   @JoinColumn(name = "assessment_id", nullable = true)
-  private PhisicalAssessment assessment;
+  private PhisicalAssessmentEntity assessment;
 
   @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private Set<Workout> workouts = new HashSet<>();

@@ -1,13 +1,13 @@
-package br.com.alex.springAPI.database.entity;
+package br.com.alex.springAPI.infrastructure.persistence.jpa.entity;
 
 
-import br.com.alex.springAPI.infrastructure.persistence.entity.ExerciseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
@@ -20,7 +20,7 @@ public class Workout {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private UUID id;
 
   @Column(name = "name", nullable = false)
   private String name;
