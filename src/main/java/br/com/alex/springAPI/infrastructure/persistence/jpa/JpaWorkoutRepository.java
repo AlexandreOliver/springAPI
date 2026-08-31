@@ -52,7 +52,7 @@ public class JpaWorkoutRepository implements IWorkoutRepository {
 
   @Override
   public void delete(WorkoutId id) {
-
+    this.workoutEntityRepository.deleteById(id.id());
   }
 
   @Override
