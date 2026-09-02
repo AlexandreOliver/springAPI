@@ -1,9 +1,12 @@
 package br.com.alex.springAPI.infrastructure.http.controllers;
 
 import br.com.alex.springAPI.application.exception.NotFoundError;
+import br.com.alex.springAPI.application.input.PageRequestApplication;
+import br.com.alex.springAPI.application.output.WorkoutDetailOutput;
 import br.com.alex.springAPI.application.usecases.CreateWorkoutUseCase;
 import br.com.alex.springAPI.application.usecases.DeleteWorkoutUseCase;
-import br.com.alex.springAPI.domain.valueObjects.StudentId;
+import br.com.alex.springAPI.application.usecases.GetWorkoutDetailUseCase;
+import br.com.alex.springAPI.domain.valueObjects.Pagination;
 import br.com.alex.springAPI.domain.valueObjects.WorkoutId;
 import br.com.alex.springAPI.infrastructure.http.exception.NotFoundExpection;
 import br.com.alex.springAPI.infrastructure.http.handler.OnlyMessageResponse;
@@ -23,6 +26,7 @@ public class WorkoutController {
 
   private final CreateWorkoutUseCase createWorkoutUseCase;
   private final DeleteWorkoutUseCase deleteUseCase;
+  private final GetWorkoutDetailUseCase workoutDetailUseCase;
 
   @PostMapping()
   @ResponseStatus(HttpStatus.CREATED)
@@ -42,5 +46,13 @@ public class WorkoutController {
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void DELETE(@PathVariable UUID id) {
     this.deleteUseCase.execute(new WorkoutId(id));
+  }
+
+
+  @GetMapping("/detail")
+  @ResponseStatus(HttpStatus.OK)
+  public Pagination<WorkoutDetailOutput> GET_DETAIL(@RequestParam(defaultValue = "1", required = false) int page, @RequestParam(defaultValue = "10", required = false) int size) {
+
+    return this.workoutDetailUseCase.execute(new PageRequestApplication(page, size));
   }
 }

@@ -15,6 +15,7 @@ import br.com.alex.springAPI.application.output.WorkoutOutput;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.UUID;
 
 @Service
@@ -34,6 +35,7 @@ public class CreateWorkoutUseCase {
         .name(workoutInput.name())
         .objective(workoutInput.objective())
         .studentId(workoutInput.studentId())
+        .exercises(new HashSet<>())
         .build();
 
     for (UUID id: workoutInput.exercises()) {

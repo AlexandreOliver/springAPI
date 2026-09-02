@@ -9,7 +9,6 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -24,7 +23,7 @@ public class Workout {
 
   private String objective;
 
-  private Set<Exercise> exercises = new HashSet<>();
+  private Set<Exercise> exercises;
 
   private StudentId studentId;
 

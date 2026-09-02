@@ -1,10 +1,16 @@
 package br.com.alex.springAPI.infrastructure.persistence.jpa.interfaces;
 
+
+import br.com.alex.springAPI.application.projections.WorkoutDetailProjection;
 import br.com.alex.springAPI.infrastructure.persistence.jpa.entity.WorkoutEntity;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public interface IWorkoutEntityRepository extends JpaRepository<WorkoutEntity, UUID> {
@@ -13,4 +19,53 @@ public interface IWorkoutEntityRepository extends JpaRepository<WorkoutEntity, U
 
   @Query("SELECT w FROM WorkoutEntity w LEFT JOIN FETCH w.exercises WHERE w.student.id = :id")
   List<WorkoutEntity> findByStudent_IdWithExercise(UUID id);
+
+  @Query("""
+    SELECT
+        wE
+    FROM WorkoutEntity wE
+    JOIN FETCH wE.exercises ex
+""")
+  Page<WorkoutEntity> findAllWithExercise(Pageable pageable);
+
+  @Query("""
+    SELECT
+        wE
+    FROM
+        WorkoutEntity wE
+    JOIN FETCH
+        wE.student
+""")
+  Page<WorkoutEntity> findAllWithStudent(Pageable pageable);
+
+  @Query("""
+    SELECT
+        wE.id,
+        e
+    FROM
+        WorkoutEntity wE
+    JOIN
+        wE.exercises e
+    WHERE
+        wE.id in :workoutsId
+""")
+  Set<Object[]> findExerciseByWorkoutIds(Set<UUID> workoutsId);
+
+  @Query(value = """
+    SELECT
+        wE.id AS id,
+        wE.name AS name,
+        wE.objective AS objective,
+        s.name AS studentIdName
+    FROM
+        WorkoutEntity wE
+    JOIN
+        wE.student s
+""",
+      countQuery = """
+    SELECT COUNT(wE)
+    FROM WorkoutEntity wE
+    JOIN wE.student s
+""")
+  Page<WorkoutDetailProjection> findAllWorkoutDetail(Pageable pageable);
 }

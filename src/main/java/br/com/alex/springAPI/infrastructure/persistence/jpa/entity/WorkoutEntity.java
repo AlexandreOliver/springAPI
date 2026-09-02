@@ -36,7 +36,7 @@ public class WorkoutEntity {
   @JoinColumn(name = "student_id")
   private StudentEntity student;
 
-  @ManyToMany(cascade = CascadeType.PERSIST)
+  @ManyToMany(cascade = CascadeType.MERGE)
   @JoinTable(
     name = "execise_workout",
       joinColumns = @JoinColumn(name = "workout_id"),
@@ -60,11 +60,13 @@ public class WorkoutEntity {
   }
 
   public Workout toDomain() {
-    return Workout.builder()
+
+    var building = Workout.builder()
         .id(new WorkoutId(this.id))
         .name(this.name)
         .objective(this.objective)
-        .exercises(this.exercises.stream().map(ExerciseEntity::toDomain).collect(Collectors.toSet()))
-        .build();
+        .exercises(this.exercises.stream().map(ExerciseEntity::toDomain).collect(Collectors.toSet()));
+
+    return building.build();
   }
 }
