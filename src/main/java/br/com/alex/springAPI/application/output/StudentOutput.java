@@ -1,11 +1,13 @@
 package br.com.alex.springAPI.application.output;
 
 import br.com.alex.springAPI.domain.Student;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 
 import java.util.UUID;
 
 @Builder
+@Schema(description = "Saida de um estudante com sua avaliação física")
 public record StudentOutput(
     UUID Id,
     String name,

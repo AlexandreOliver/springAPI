@@ -11,6 +11,8 @@ import br.com.alex.springAPI.domain.valueObjects.WorkoutId;
 import br.com.alex.springAPI.infrastructure.http.exception.NotFoundException;
 import br.com.alex.springAPI.infrastructure.http.handler.OnlyMessageResponse;
 import br.com.alex.springAPI.infrastructure.http.request.WorkoutCreate;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/v1/workout")
 @RequiredArgsConstructor
+@Tag(name = "Workout", description = "Endpoints para gerenciamento de treinos")
 public class WorkoutController {
 
   private final CreateWorkoutUseCase createWorkoutUseCase;
@@ -30,6 +33,7 @@ public class WorkoutController {
 
   @PostMapping()
   @ResponseStatus(HttpStatus.CREATED)
+  @Operation(summary = "Cria um novo treino", description = "Cria um novo treino para um aluno específico")
   public OnlyMessageResponse POST_WORKOUT(@Valid @RequestBody WorkoutCreate workoutCreate, @RequestParam UUID studentid) {
 
     try {
@@ -44,6 +48,7 @@ public class WorkoutController {
 
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
+  @Operation(summary = "Deleta um treino", description = "Deleta um treino específico pelo ID")
   public void DELETE(@PathVariable UUID id) {
     this.deleteUseCase.execute(new WorkoutId(id));
   }
@@ -51,6 +56,7 @@ public class WorkoutController {
 
   @GetMapping("/detail")
   @ResponseStatus(HttpStatus.OK)
+  @Operation(summary = "Obtém detalhes de treinos", description = "Retorna uma lista paginada de detalhes de treinos")
   public Pagination<WorkoutDetailOutput> GET_DETAIL(@RequestParam(defaultValue = "1", required = false) int page, @RequestParam(defaultValue = "10", required = false) int size) {
 
     return this.workoutDetailUseCase.execute(new PageRequestApplication(page, size));

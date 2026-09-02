@@ -2,6 +2,7 @@ package br.com.alex.springAPI.application.output;
 
 import br.com.alex.springAPI.domain.Workout;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 
 import java.util.Objects;
@@ -10,6 +11,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Builder
+@Schema(description = "Saida de um treino com seus exercícios")
 public record WorkoutOutput(
     UUID id,
     String name,

@@ -19,6 +19,9 @@ import br.com.alex.springAPI.infrastructure.http.exception.NotFoundException;
 import br.com.alex.springAPI.infrastructure.http.handler.OnlyMessageResponse;
 import br.com.alex.springAPI.infrastructure.http.request.StudentCreate;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -32,6 +35,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/v1/student")
 @RequiredArgsConstructor
+@Tag(name = "Student", description = "Endpoints para gerenciamento de alunos")
 public class StudentController {
 
   private final CreateStudentUseCase createUseCase;
@@ -44,6 +48,7 @@ public class StudentController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
+  @Operation(summary = "Cria um novo aluno", description = "Cria um novo aluno com os dados fornecidos")
   public OnlyMessageResponse create(@Valid @RequestBody StudentCreate dto) {
     try {
       this.createUseCase.execute(dto.toInput());
@@ -56,7 +61,11 @@ public class StudentController {
 
  @GetMapping
  @ResponseStatus(HttpStatus.OK)
- public ResponseEntity<?> GET_ALL(@RequestParam(required = false) String include) {
+ @Operation(summary = "Lista todos os alunos", description = "Retorna uma lista dos alunos")
+ public ResponseEntity<?> GET_ALL(
+     @Parameter(description = "Parâmetro opcional para incluir informações de avaliação")
+     @RequestParam(required = false) String include
+ ) {
 
    if ("assessment".equalsIgnoreCase(include)) {
      List<StudentOutput> students = this.getAllUseCase.execute(true);
@@ -71,7 +80,11 @@ public class StudentController {
 
   @GetMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
-  public ResponseEntity<?> GET_STUDENT(@PathVariable UUID id, @RequestParam(required = false) String include) {
+  @Operation(summary = "Obtém os dados de um aluno", description = "Retorna os dados de um aluno específico pelo ID")
+  public ResponseEntity<?> GET_STUDENT(
+      @PathVariable UUID id,
+      @Parameter(description = "Parâmetro opcional para incluir informações de avaliação")
+      @RequestParam(required = false) String include) {
     try {
       if ("assessment".equalsIgnoreCase(include)) {
         return ResponseEntity.ok(this.getByIdUseCase.execute(new StudentId(id), true));
@@ -88,12 +101,14 @@ public class StudentController {
 
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
+  @Operation(summary = "Deleta um aluno", description = "Deleta um aluno específico pelo ID")
   public void DELETE(@PathVariable UUID id) {
     this.deleteUseCase.execute(new StudentId(id));
   }
 
   @GetMapping("/{id}/assessment")
   @ResponseStatus(HttpStatus.OK)
+  @Operation(summary = "Obtém a avaliação de um aluno", description = "Retorna a avaliação de um aluno específico pelo ID")
   public AssessmentOutput GET_ASSESSMENT(@PathVariable UUID id) {
    AssessmentOutput assessment;
 
@@ -113,6 +128,7 @@ public class StudentController {
 
   @PostMapping("/{id}/assessment")
   @ResponseStatus(HttpStatus.OK)
+  @Operation(summary = "Cria uma avaliação para o aluno", description = "Cria uma avaliação para o aluno específico pelo ID")
   public OnlyMessageResponse POST_ASSESSMENT(@PathVariable UUID id, @Valid @RequestBody AssessmentRequestCreate requestBody) {
 
    try {
@@ -128,6 +144,7 @@ public class StudentController {
 
   @PostMapping("/{id}/workout")
   @ResponseStatus(HttpStatus.CREATED)
+  @Operation(summary = "Cria um treino para o aluno", description = "Cria um treino para o aluno específico pelo ID")
   public OnlyMessageResponse POST_WORKOUT(@Valid @RequestBody WorkoutCreate workoutCreate, @PathVariable UUID id) {
 
    try {
@@ -142,7 +159,11 @@ public class StudentController {
 
   @GetMapping("/{id}/workout")
   @ResponseStatus(HttpStatus.OK)
-  public List<WorkoutOutput> GET_WORKOUT(@PathVariable UUID id, @RequestParam(required = false) String include) {
+  @Operation(summary = "Obtém os treinos de um aluno", description = "Retorna uma lista de treinos de um aluno específico pelo ID")
+  public List<WorkoutOutput> GET_WORKOUT(
+      @PathVariable UUID id,
+      @Parameter(description = "Parâmetro opcional para incluir informações dos exercícios do treino")
+      @RequestParam(required = false) String include) {
 
    try {
 
