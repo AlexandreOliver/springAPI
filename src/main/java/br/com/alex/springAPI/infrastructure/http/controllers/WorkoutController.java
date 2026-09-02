@@ -8,7 +8,7 @@ import br.com.alex.springAPI.application.usecases.DeleteWorkoutUseCase;
 import br.com.alex.springAPI.application.usecases.GetWorkoutDetailUseCase;
 import br.com.alex.springAPI.domain.valueObjects.Pagination;
 import br.com.alex.springAPI.domain.valueObjects.WorkoutId;
-import br.com.alex.springAPI.infrastructure.http.exception.NotFoundExpection;
+import br.com.alex.springAPI.infrastructure.http.exception.NotFoundException;
 import br.com.alex.springAPI.infrastructure.http.handler.OnlyMessageResponse;
 import br.com.alex.springAPI.infrastructure.http.request.WorkoutCreate;
 import jakarta.validation.Valid;
@@ -20,7 +20,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("v1/workout")
+@RequestMapping("/v1/workout")
 @RequiredArgsConstructor
 public class WorkoutController {
 
@@ -35,7 +35,7 @@ public class WorkoutController {
     try {
       this.createWorkoutUseCase.execute(workoutCreate.toInput(studentid));
     } catch (NotFoundError e) {
-      throw new NotFoundExpection(e.getMessage(), Optional.of("Corrija o Requisição"));
+      throw new NotFoundException(e.getMessage(), Optional.of("Corrija o Requisição"));
     }
 
     return new OnlyMessageResponse("Treino criado com Sucesso");

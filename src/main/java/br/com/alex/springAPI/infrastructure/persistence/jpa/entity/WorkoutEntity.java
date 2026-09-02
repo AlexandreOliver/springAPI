@@ -38,7 +38,7 @@ public class WorkoutEntity {
 
   @ManyToMany(cascade = CascadeType.MERGE)
   @JoinTable(
-    name = "execise_workout",
+    name = "exercise_workout",
       joinColumns = @JoinColumn(name = "workout_id"),
       inverseJoinColumns = @JoinColumn(name = "exercise_id")
   )

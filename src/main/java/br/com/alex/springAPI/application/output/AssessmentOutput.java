@@ -1,6 +1,6 @@
 package br.com.alex.springAPI.application.output;
 
-import br.com.alex.springAPI.domain.PhisicalAssessment;
+import br.com.alex.springAPI.domain.PhysicalAssessment;
 import lombok.Builder;
 
 import java.util.UUID;
@@ -13,7 +13,7 @@ public record AssessmentOutput(
     double percentBodyFat
 ) {
 
-  public static AssessmentOutput of(PhisicalAssessment assessment) {
+  public static AssessmentOutput of(PhysicalAssessment assessment) {
     return AssessmentOutput.builder()
         .id(assessment.getId().uuid())
         .preco(assessment.getPreco().amount().toString())

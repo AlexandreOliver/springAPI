@@ -1,7 +1,7 @@
 package br.com.alex.springAPI.infrastructure.persistence.jpa.interfaces;
 
 
-import br.com.alex.springAPI.application.projections.WorkoutDetailProjection;
+import br.com.alex.springAPI.infrastructure.persistence.jpa.projections.WorkoutDetailProjection;
 import br.com.alex.springAPI.infrastructure.persistence.jpa.entity.WorkoutEntity;
 
 import org.springframework.data.domain.Page;

@@ -1,6 +1,5 @@
 package br.com.alex.springAPI.infrastructure.http.handler;
 
-import br.com.alex.springAPI.application.exception.DuplicatedAssessmentError;
 import br.com.alex.springAPI.infrastructure.http.exception.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -17,8 +16,8 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(NotFoundExpection.class)
-    public ResponseEntity<ErrorResponse> handlerNotFoundException(NotFoundExpection ex) {
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorResponse> handlerNotFoundException(NotFoundException ex) {
 
         ErrorResponse response = ErrorResponse
                 .builder()

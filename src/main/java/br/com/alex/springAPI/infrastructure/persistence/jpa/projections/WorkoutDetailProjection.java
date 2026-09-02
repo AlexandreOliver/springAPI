@@ -1,4 +1,4 @@
-package br.com.alex.springAPI.application.projections;
+package br.com.alex.springAPI.infrastructure.persistence.jpa.projections;
 
 import java.util.UUID;
 

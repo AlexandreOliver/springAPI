@@ -1,7 +1,7 @@
 package br.com.alex.springAPI.application.usecases;
 
 
-import br.com.alex.springAPI.domain.PhisicalAssessment;
+import br.com.alex.springAPI.domain.PhysicalAssessment;
 import br.com.alex.springAPI.domain.Student;
 import br.com.alex.springAPI.domain.interfaces.IStudentRepository;
 import br.com.alex.springAPI.domain.valueObjects.PhisicalAssessmentId;
@@ -28,18 +28,18 @@ public class CreateAssessmentUseCase {
         .orElseThrow(() -> new NotFoundError("Aluno não encontrado"));
 
 
-    if (Objects.nonNull(student.getPhisicalAssessment())) {
+    if (Objects.nonNull(student.getPhysicalAssessment())) {
       throw new DuplicatedAssessmentError("Já existe um exame fisico para esse aluno: " + id.uuid(), assessmentInput);
     }
 
-    PhisicalAssessment assessment = PhisicalAssessment.builder()
+    PhysicalAssessment assessment = PhysicalAssessment.builder()
         .id(new PhisicalAssessmentId())
         .preco(assessmentInput.preco())
         .altura(assessmentInput.altura())
         .percentBodyFat(assessmentInput.percentBodyFat())
         .build();
 
-    student.setPhisicalAssessment(assessment);
+    student.setPhysicalAssessment(assessment);
 
     this.studentRepository.save(student);
 

@@ -7,7 +7,7 @@ import br.com.alex.springAPI.domain.valueObjects.ExerciseId;
 
 import br.com.alex.springAPI.infrastructure.http.request.ExerciseCreate;
 import br.com.alex.springAPI.infrastructure.http.request.ExercisePatch;
-import br.com.alex.springAPI.infrastructure.http.exception.NotFoundExpection;
+import br.com.alex.springAPI.infrastructure.http.exception.NotFoundException;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -44,14 +44,14 @@ public class ExerciseController {
 
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void DELETE(@PathVariable UUID id) throws NotFoundExpection {
+  public void DELETE(@PathVariable UUID id) throws NotFoundException {
 
     this.deleteUseCase.execute(new ExerciseId(id));
   }
 
   @PatchMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void PATCH(@Valid @RequestBody ExercisePatch dataInput, @PathVariable UUID id) throws NotFoundExpection {
+  public void PATCH(@Valid @RequestBody ExercisePatch dataInput, @PathVariable UUID id) throws NotFoundException {
 
     this.updateUseCase.execute(dataInput.toInput(), new ExerciseId(id));
   }

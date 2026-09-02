@@ -18,7 +18,7 @@ public class Student {
 
   private String email;
 
-  private PhisicalAssessment phisicalAssessment;
+  private PhysicalAssessment physicalAssessment;
 
   public void update(
       Optional<StudentId> id,

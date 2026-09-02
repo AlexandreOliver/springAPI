@@ -11,7 +11,7 @@ import java.util.Optional;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PhisicalAssessment {
+public class PhysicalAssessment {
   private PhisicalAssessmentId id;
   private Price preco;
   private double altura;

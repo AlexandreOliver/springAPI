@@ -18,8 +18,8 @@ public record StudentOutput(
         .name(student.getName())
         .email(student.getEmail());
 
-    if (student.getPhisicalAssessment() != null) {
-      building.assessment(AssessmentOutput.of(student.getPhisicalAssessment()));
+    if (student.getPhysicalAssessment() != null) {
+      building.assessment(AssessmentOutput.of(student.getPhysicalAssessment()));
     }
 
     return building.build();

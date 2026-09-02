@@ -1,7 +1,7 @@
 package br.com.alex.springAPI.infrastructure.persistence.jpa;
 
 import br.com.alex.springAPI.domain.interfaces.IPhisicalAssessmentRepository;
-import br.com.alex.springAPI.domain.PhisicalAssessment;
+import br.com.alex.springAPI.domain.PhysicalAssessment;
 import br.com.alex.springAPI.domain.valueObjects.PhisicalAssessmentId;
 
 import br.com.alex.springAPI.infrastructure.persistence.jpa.entity.PhisicalAssessmentEntity;
@@ -19,20 +19,20 @@ public class JpaPhisicalAssessmentRepository implements IPhisicalAssessmentRepos
   private final IPhisicalAssessmentEntityRepository assessmentEntityRepository;
 
   @Override
-  public PhisicalAssessment save(PhisicalAssessment assessment) {
+  public PhysicalAssessment save(PhysicalAssessment assessment) {
     var phisicalEntity = this.assessmentEntityRepository.save(PhisicalAssessmentEntity.from(assessment));
 
     return phisicalEntity.toDomain();
   }
 
   @Override
-  public List<PhisicalAssessment> findAll() {
+  public List<PhysicalAssessment> findAll() {
 
     return this.assessmentEntityRepository.findAll().stream().map(PhisicalAssessmentEntity::toDomain).toList();
   }
 
   @Override
-  public Optional<PhisicalAssessment> findById(PhisicalAssessmentId id) {
+  public Optional<PhysicalAssessment> findById(PhisicalAssessmentId id) {
     return Optional.ofNullable(this.assessmentEntityRepository.getReferenceById(id.uuid()).toDomain());
   }
 

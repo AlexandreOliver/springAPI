@@ -15,7 +15,7 @@ import br.com.alex.springAPI.infrastructure.http.exception.UnprocessableEntityEx
 import br.com.alex.springAPI.infrastructure.http.request.AssessmentRequestCreate;
 import br.com.alex.springAPI.infrastructure.http.request.WorkoutCreate;
 import br.com.alex.springAPI.infrastructure.http.response.StudentSummaryResponse;
-import br.com.alex.springAPI.infrastructure.http.exception.NotFoundExpection;
+import br.com.alex.springAPI.infrastructure.http.exception.NotFoundException;
 import br.com.alex.springAPI.infrastructure.http.handler.OnlyMessageResponse;
 import br.com.alex.springAPI.infrastructure.http.request.StudentCreate;
 
@@ -82,7 +82,7 @@ public class StudentController {
       }
 
     } catch (NotFoundError ex) {
-      throw new NotFoundExpection(ex.getMessage(), Optional.of("Crie."));
+      throw new NotFoundException(ex.getMessage(), Optional.of("Crie."));
     }
   }
 
@@ -100,11 +100,11 @@ public class StudentController {
    try {
      assessment = this.getByIdUseCase.execute(new StudentId(id), true).assessment();
    } catch (NotFoundError e) {
-     throw new NotFoundExpection(e.getMessage(), Optional.of("Forneça outro Id"));
+     throw new NotFoundException(e.getMessage(), Optional.of("Forneça outro Id"));
    }
 
      if (assessment == null) {
-       throw new NotFoundExpection("Esse aluno não possui um exame registrado",
+       throw new NotFoundException("Esse aluno não possui um exame registrado",
            Optional.of("Registre um exame para ele"));
      }
 
@@ -118,7 +118,7 @@ public class StudentController {
    try {
      this.createAssessmentUseCase.execute(requestBody.toInput(), new StudentId(id));
    } catch (NotFoundError ex) {
-     throw new NotFoundExpection(ex.getMessage(), Optional.of("Verifique o Id e tente novamente"));
+     throw new NotFoundException(ex.getMessage(), Optional.of("Verifique o Id e tente novamente"));
    } catch (DuplicatedAssessmentError ex) {
      throw new UnprocessableEntityException(ex.getMessage(), "Você só pode criar um exame para quem não possui");
    }
@@ -133,7 +133,7 @@ public class StudentController {
    try {
      this.createWorkoutUseCase.execute(workoutCreate.toInput(id));
    } catch (NotFoundError e) {
-     throw new NotFoundExpection(e.getMessage(), Optional.of("Corrija o Requisição"));
+     throw new NotFoundException(e.getMessage(), Optional.of("Corrija o Requisição"));
    }
 
    return new OnlyMessageResponse("Treino criado com Sucesso");

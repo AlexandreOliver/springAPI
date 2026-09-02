@@ -7,13 +7,13 @@ import org.springframework.http.HttpStatus;
 import java.util.Optional;
 
 @Getter
-public class NotFoundExpection extends RuntimeException{
+public class NotFoundException extends RuntimeException{
 
     private final String name;
     private final String action;
     private final HttpStatus statusCode;
 
-    public NotFoundExpection(String message, Optional<String> action) {
+    public NotFoundException(String message, Optional<String> action) {
         super(message);
 
         this.name = "NotFoundError";

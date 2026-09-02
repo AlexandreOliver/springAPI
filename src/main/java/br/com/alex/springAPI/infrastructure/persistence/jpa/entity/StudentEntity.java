@@ -43,8 +43,8 @@ public class StudentEntity {
         .name(student.getName())
         .email(student.getEmail());
 
-    if (student.getPhisicalAssessment() != null) {
-      studentEntity.assessment(PhisicalAssessmentEntity.from(student.getPhisicalAssessment()));
+    if (student.getPhysicalAssessment() != null) {
+      studentEntity.assessment(PhisicalAssessmentEntity.from(student.getPhysicalAssessment()));
     }
 
     return studentEntity.build();
@@ -58,7 +58,7 @@ public class StudentEntity {
         .email(this.email);
 
     if (this.assessment != null) {
-      StudentDomain.phisicalAssessment(this.assessment.toDomain());
+      StudentDomain.physicalAssessment(this.assessment.toDomain());
     }
 
     return StudentDomain.build();

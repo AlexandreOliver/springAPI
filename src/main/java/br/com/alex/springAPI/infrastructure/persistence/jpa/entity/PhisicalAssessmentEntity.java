@@ -1,6 +1,6 @@
 package br.com.alex.springAPI.infrastructure.persistence.jpa.entity;
 
-import br.com.alex.springAPI.domain.PhisicalAssessment;
+import br.com.alex.springAPI.domain.PhysicalAssessment;
 import br.com.alex.springAPI.domain.valueObjects.PhisicalAssessmentId;
 import br.com.alex.springAPI.domain.valueObjects.Price;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -34,7 +34,7 @@ public class PhisicalAssessmentEntity {
   @Column(nullable = false, name = "percent_body_fat")
   private BigDecimal percentBodyFat;
 
-  public static PhisicalAssessmentEntity from(PhisicalAssessment assessment) {
+  public static PhisicalAssessmentEntity from(PhysicalAssessment assessment) {
     return PhisicalAssessmentEntity.builder()
         .id(assessment.getId().uuid())
         .preco(assessment.getPreco().inCents())
@@ -43,8 +43,8 @@ public class PhisicalAssessmentEntity {
         .build();
   }
 
-  public PhisicalAssessment toDomain() {
-    return PhisicalAssessment.builder()
+  public PhysicalAssessment toDomain() {
+    return PhysicalAssessment.builder()
         .id(new PhisicalAssessmentId(this.id))
         .altura(this.altura.doubleValue())
         .preco(Price.ofCents(this.preco.longValue()))
