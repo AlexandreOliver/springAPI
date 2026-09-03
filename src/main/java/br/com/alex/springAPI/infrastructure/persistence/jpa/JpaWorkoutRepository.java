@@ -1,6 +1,7 @@
 package br.com.alex.springAPI.infrastructure.persistence.jpa;
 
 
+import br.com.alex.springAPI.application.input.PageRequestApplication;
 import br.com.alex.springAPI.domain.valueObjects.WorkoutDetail;
 import br.com.alex.springAPI.domain.Exercise;
 import br.com.alex.springAPI.domain.Workout;
@@ -22,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
+import java.awt.font.TextHitInfo;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -49,6 +51,22 @@ public class JpaWorkoutRepository implements IWorkoutRepository {
   @Override
   public List<Workout> findAll() {
     return List.of();
+  }
+
+  @Override
+  public Pagination<Workout> findAll(PageRequestApplication requestPage, Optional<String> query) {
+
+    var pageInDb = this.workoutEntityRepository.findAllWithFilter(query.orElse(""), PageRequest.of(requestPage.page() - 1, requestPage.size()));
+
+    Pagination<Workout> workoutPagination = Pagination.<Workout>builder()
+        .pageSize(pageInDb.getSize())
+        .totalPages(pageInDb.getTotalPages())
+        .totalElements((int) pageInDb.getTotalElements())
+        .pageCurrent(pageInDb.getNumber() + 1)
+        .contents(pageInDb.getContent().stream().map(WorkoutEntity::toDomain).toList())
+        .build();
+
+    return workoutPagination;
   }
 
   @Override

@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.util.List;
+import java.util.function.Function;
 
 @Getter
 @Builder
@@ -37,5 +38,17 @@ public final class Pagination<T> {
 
   public boolean isMore() {
     return pageCurrent < totalPages;
+  }
+
+  public <R> Pagination<R> map(Function<T, R> mapper) {
+
+    List<R> mappedContents = this.contents.stream().map(mapper).toList();
+    return Pagination.<R>builder()
+        .pageSize(this.pageSize)
+        .pageCurrent(this.pageCurrent)
+        .totalPages(this.totalPages)
+        .totalElements(this.totalElements)
+        .contents(mappedContents)
+        .build();
   }
 }

@@ -1,10 +1,13 @@
 package br.com.alex.springAPI.infrastructure.http.controllers;
 
 import br.com.alex.springAPI.application.exception.NotFoundError;
+import br.com.alex.springAPI.application.input.FindAllCommand;
 import br.com.alex.springAPI.application.input.PageRequestApplication;
 import br.com.alex.springAPI.application.output.WorkoutDetailOutput;
+import br.com.alex.springAPI.application.output.WorkoutOutput;
 import br.com.alex.springAPI.application.usecases.CreateWorkoutUseCase;
 import br.com.alex.springAPI.application.usecases.DeleteWorkoutUseCase;
+import br.com.alex.springAPI.application.usecases.FindAllWorkoutUseCase;
 import br.com.alex.springAPI.application.usecases.GetWorkoutDetailUseCase;
 import br.com.alex.springAPI.domain.valueObjects.Pagination;
 import br.com.alex.springAPI.domain.valueObjects.WorkoutId;
@@ -12,6 +15,7 @@ import br.com.alex.springAPI.infrastructure.http.exception.NotFoundException;
 import br.com.alex.springAPI.infrastructure.http.handler.OnlyMessageResponse;
 import br.com.alex.springAPI.infrastructure.http.request.WorkoutCreate;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +34,7 @@ public class WorkoutController {
   private final CreateWorkoutUseCase createWorkoutUseCase;
   private final DeleteWorkoutUseCase deleteUseCase;
   private final GetWorkoutDetailUseCase workoutDetailUseCase;
+  private final FindAllWorkoutUseCase allWorkoutUseCase;
 
   @PostMapping()
   @ResponseStatus(HttpStatus.CREATED)
@@ -44,6 +49,18 @@ public class WorkoutController {
 
     return new OnlyMessageResponse("Treino criado com Sucesso");
 
+  }
+
+  @GetMapping("/page/{page}/size/{size}")
+  @ResponseStatus(HttpStatus.OK)
+  @Operation(summary = "Obtém treinos", description = "Retorna uma lista paginada de treinos")
+  public Pagination<WorkoutOutput> GET_WORKOUT(
+      @PathVariable(required = false) int page,
+      @PathVariable(required = false) int size,
+      @Parameter(name = "query", description = "Parâmetro de pesquisa opcional para filtrar os treinos")
+      @RequestParam(required = false) Optional<String> query) {
+
+    return this.allWorkoutUseCase.execute(new FindAllCommand(page, size, query.orElse(null)));
   }
 
   @DeleteMapping("/{id}")

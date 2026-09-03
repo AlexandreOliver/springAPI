@@ -20,23 +20,20 @@ public interface IWorkoutEntityRepository extends JpaRepository<WorkoutEntity, U
   @Query("SELECT w FROM WorkoutEntity w LEFT JOIN FETCH w.exercises WHERE w.student.id = :id")
   List<WorkoutEntity> findByStudent_IdWithExercise(UUID id);
 
-  @Query("""
+  @Query(value = """
     SELECT
         wE
     FROM WorkoutEntity wE
-    JOIN FETCH wE.exercises ex
-""")
-  Page<WorkoutEntity> findAllWithExercise(Pageable pageable);
-
-  @Query("""
-    SELECT
-        wE
-    FROM
-        WorkoutEntity wE
-    JOIN FETCH
-        wE.student
-""")
-  Page<WorkoutEntity> findAllWithStudent(Pageable pageable);
+    WHERE wE.name LIKE %:query% OR wE.objective LIKE %:query%
+""",
+  countQuery = """
+    SELECT 
+        COUNT(wE)
+    FROM WorkoutEntity wE
+    WHERE wE.name LIKE %:query% OR wE.objective LIKE %:query%
+      """
+  )
+  Page<WorkoutEntity> findAllWithFilter(String query, Pageable pageable);
 
   @Query("""
     SELECT
