@@ -5,7 +5,7 @@ import br.com.alex.springAPI.application.dtos.input.FindAllCommand;
 import br.com.alex.springAPI.application.dtos.output.WorkoutOutput;
 import br.com.alex.springAPI.domain.Workout;
 import br.com.alex.springAPI.application.interfaces.IWorkoutRepository;
-import br.com.alex.springAPI.domain.valueObjects.Pagination;
+import br.com.alex.springAPI.application.dtos.Pagination;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

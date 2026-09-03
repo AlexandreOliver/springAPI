@@ -4,8 +4,8 @@ import br.com.alex.springAPI.application.dtos.input.PageRequestApplication;
 import br.com.alex.springAPI.domain.Exercise;
 import br.com.alex.springAPI.domain.Workout;
 
-import br.com.alex.springAPI.domain.valueObjects.WorkoutDetail;
-import br.com.alex.springAPI.domain.valueObjects.Pagination;
+import br.com.alex.springAPI.application.dtos.WorkoutDetail;
+import br.com.alex.springAPI.application.dtos.Pagination;
 import br.com.alex.springAPI.domain.valueObjects.StudentId;
 import br.com.alex.springAPI.domain.valueObjects.WorkoutId;
 

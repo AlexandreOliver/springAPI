@@ -1,4 +1,4 @@
-package br.com.alex.springAPI.domain.valueObjects;
+package br.com.alex.springAPI.application.dtos;
 
 import lombok.Builder;
 import lombok.Getter;

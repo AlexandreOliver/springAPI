@@ -1,12 +1,12 @@
 package br.com.alex.springAPI.application.usecases;
 
-import br.com.alex.springAPI.domain.valueObjects.WorkoutDetail;
+import br.com.alex.springAPI.application.dtos.WorkoutDetail;
 import br.com.alex.springAPI.application.dtos.input.PageRequestApplication;
 import br.com.alex.springAPI.application.dtos.output.ExerciseOutput;
 import br.com.alex.springAPI.application.dtos.output.WorkoutDetailOutput;
 import br.com.alex.springAPI.domain.Exercise;
 import br.com.alex.springAPI.application.interfaces.IWorkoutRepository;
-import br.com.alex.springAPI.domain.valueObjects.Pagination;
+import br.com.alex.springAPI.application.dtos.Pagination;
 import br.com.alex.springAPI.domain.valueObjects.WorkoutId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,5 +1,6 @@
-package br.com.alex.springAPI.domain.valueObjects;
+package br.com.alex.springAPI.application.dtos;
 
+import br.com.alex.springAPI.domain.valueObjects.WorkoutId;
 import lombok.Builder;
 
 @Builder

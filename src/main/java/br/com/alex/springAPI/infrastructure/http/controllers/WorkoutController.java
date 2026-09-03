@@ -9,7 +9,7 @@ import br.com.alex.springAPI.application.usecases.CreateWorkoutUseCase;
 import br.com.alex.springAPI.application.usecases.DeleteWorkoutUseCase;
 import br.com.alex.springAPI.application.usecases.FindAllWorkoutUseCase;
 import br.com.alex.springAPI.application.usecases.GetWorkoutDetailUseCase;
-import br.com.alex.springAPI.domain.valueObjects.Pagination;
+import br.com.alex.springAPI.application.dtos.Pagination;
 import br.com.alex.springAPI.domain.valueObjects.WorkoutId;
 import br.com.alex.springAPI.infrastructure.http.exception.NotFoundException;
 import br.com.alex.springAPI.infrastructure.http.handler.OnlyMessageResponse;
