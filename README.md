@@ -22,12 +22,13 @@ A estrutura segue uma abordagem de domínio rico com value objects, repositório
 ### Student
 Representa o aluno da academia.
 
-Atributos principais:
-- id: identificador único do aluno
-- name: nome
-- email: e-mail do aluno
-- phisicalAssessment: avaliação física associada
-- workouts: treinos vinculados ao aluno
+| Campo | Descrição |
+| --- | --- |
+| `id` | Identificador único do aluno. |
+| `name` | Nome completo do aluno. |
+| `email` | E-mail do aluno, utilizado como identificador único. |
+| `phisicalAssessment` | Avaliação física associada ao aluno. |
+| `workouts` | Treinos vinculados ao aluno. |
 
 Regras de domínio:
 - e-mail único
@@ -37,31 +38,34 @@ Regras de domínio:
 ### PhisicalAssessment
 Representa a avaliação física do aluno.
 
-Atributos principais:
-- id
-- preco: valor da avaliação
-- altura
-- percentBodyFat: percentual de gordura corporal
+| Campo | Descrição |
+| --- | --- |
+| `id` | Identificador único da avaliação. |
+| `preco` | Valor da avaliação física. |
+| `altura` | Altura do aluno em centímetros ou unidade configurada. |
+| `percentBodyFat` | Percentual de gordura corporal. |
 
 ### Workout
 Representa um treino de um aluno.
 
-Atributos principais:
-- id
-- name: nome do treino
-- objective: objetivo do treino
-- exercises: conjunto de exercícios
-- studentId: aluno responsável pelo treino
+| Campo | Descrição |
+| --- | --- |
+| `id` | Identificador único do treino. |
+| `name` | Nome do treino. |
+| `objective` | Objetivo principal do treino. |
+| `exercises` | Conjunto de exercícios pertencentes ao treino. |
+| `studentId` | Identificador do aluno ao qual o treino pertence. |
 
 ### Exercise
 Representa cada exercício do treino.
 
-Atributos principais:
-- id
-- name: nome do exercício
-- grupoMuscular: grupo muscular trabalhado
-- equipament: equipamento utilizado
-- difficultLevel: nível de dificuldade
+| Campo | Descrição |
+| --- | --- |
+| `id` | Identificador único do exercício. |
+| `name` | Nome do exercício. |
+| `grupoMuscular` | Grupo muscular trabalhado. |
+| `equipament` | Equipamento necessário para executar o exercício. |
+| `difficultLevel` | Nível de dificuldade do exercício. |
 
 ## Arquitetura do projeto
 
@@ -104,12 +108,17 @@ flowchart LR
     D --> E[Value Objects]
     D --> F[Domain Interfaces / Repositories]
 
-    G[JPA Entities] --> H[Persistence Adapters]
-    H --> F
-    H --> D
+    G[Infrastructure / HTTP]
+    H[JPA Entities]
+    I[Persistence Adapters]
+    J[(SQLite Database)]
 
-    I[(SQLite Database)] --> G
-    J[Swagger / OpenAPI] --> B
+    B --> G
+    G --> C
+    H --> I
+    I --> F
+    I --> D
+    J --> H
 ```
 
 ## Persistência
@@ -140,27 +149,44 @@ O arquivo de banco SQLite local é `meubanco.db` na raiz do projeto.
 
 ## Endpoints principais
 
+A API foi reorganizada para uso com paginação explícita e parâmetros de consulta adicionais, com foco em organização e escalabilidade.
+
 ### Alunos
-- `POST /v1/student` - cria um aluno
-- `GET /v1/student` - lista alunos
-- `GET /v1/student/{id}` - busca aluno por ID
-- `DELETE /v1/student/{id}` - remove aluno
-- `GET /v1/student/{id}/assessment` - busca avaliação física do aluno
-- `POST /v1/student/{id}/assessment` - cria avaliação física
-- `GET /v1/student/{id}/workout` - lista treinos do aluno
-- `POST /v1/student/{id}/workout` - cria treino para o aluno
+
+| Endpoint | Descrição |
+| --- | --- |
+| `POST /v1/student` | Cria um novo aluno. |
+| `GET /v1/student/page/{page}/size/{size}` | Lista alunos paginados. Query opcional: `include=assessment` para incluir dados da avaliação. |
+| `GET /v1/student/{id}` | Busca um aluno por ID. Query opcional: `include=assessment`. |
+| `DELETE /v1/student/{id}` | Remove um aluno. |
+| `GET /v1/student/{id}/assessment` | Retorna a avaliação física do aluno. |
+| `POST /v1/student/{id}/assessment` | Cria uma avaliação física para o aluno. |
+| `POST /v1/student/{id}/workout` | Cria um treino para o aluno. |
+| `GET /v1/student/{id}/workout?page={page}&size={size}` | Lista treinos do aluno. Query opcional: `include=exercises` para incluir exercícios. |
 
 ### Exercícios
-- `GET /v1/exercise` - lista exercícios
-- `POST /v1/exercise` - cria exercício
-- `GET /v1/exercise/{id}` - busca exercício por ID
-- `PATCH /v1/exercise/{id}` - atualiza exercício
-- `DELETE /v1/exercise/{id}` - remove exercício
+
+| Endpoint | Descrição |
+| --- | --- |
+| `GET /v1/exercise/page/{page}/size/{size}` | Lista exercícios paginados. |
+| `POST /v1/exercise` | Cria um exercício. |
+| `GET /v1/exercise/{id}` | Busca um exercício por ID. |
+| `PATCH /v1/exercise/{id}` | Atualiza parcialmente um exercício. |
+| `DELETE /v1/exercise/{id}` | Remove um exercício. |
 
 ### Treinos
-- `POST /v1/workout` - cria treino (com aluno informado por query param)
-- `GET /v1/workout/detail` - busca detalhes paginados de treinos
-- `DELETE /v1/workout/{id}` - remove treino
+
+| Endpoint | Descrição |
+| --- | --- |
+| `POST /v1/workout?studentid={uuid}` | Cria um treino vinculando um aluno por query param. |
+| `GET /v1/workout/page/{page}/size/{size}` | Lista treinos paginados. Query opcional: `query={termo}` para filtro por texto. |
+| `GET /v1/workout/detail?page={page}&size={size}` | Retorna detalhes paginados dos treinos. |
+| `DELETE /v1/workout/{id}` | Remove um treino. |
+
+### Observações sobre paginação
+- A paginação passou a ser explícita em rotas como `/page/{page}/size/{size}`.
+- Em alguns casos, a paginação é controlada por parâmetros `page` e `size` em query string.
+- Parâmetros opcionais como `include` e `query` permitem adaptar a resposta conforme a necessidade da requisição.
 
 ## Documentação da API
 
