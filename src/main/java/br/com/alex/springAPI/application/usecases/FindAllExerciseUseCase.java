@@ -1,6 +1,6 @@
 package br.com.alex.springAPI.application.usecases;
 
-import br.com.alex.springAPI.domain.interfaces.IExerciseRepository;
+import br.com.alex.springAPI.application.interfaces.IExerciseRepository;
 
 import br.com.alex.springAPI.application.output.ExerciseOutput;
 

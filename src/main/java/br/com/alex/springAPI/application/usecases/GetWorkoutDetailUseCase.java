@@ -5,7 +5,7 @@ import br.com.alex.springAPI.application.input.PageRequestApplication;
 import br.com.alex.springAPI.application.output.ExerciseOutput;
 import br.com.alex.springAPI.application.output.WorkoutDetailOutput;
 import br.com.alex.springAPI.domain.Exercise;
-import br.com.alex.springAPI.domain.interfaces.IWorkoutRepository;
+import br.com.alex.springAPI.application.interfaces.IWorkoutRepository;
 import br.com.alex.springAPI.domain.valueObjects.Pagination;
 import br.com.alex.springAPI.domain.valueObjects.WorkoutId;
 import lombok.RequiredArgsConstructor;

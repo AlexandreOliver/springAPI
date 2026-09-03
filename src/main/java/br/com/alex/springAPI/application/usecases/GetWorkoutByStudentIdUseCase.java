@@ -1,7 +1,7 @@
 package br.com.alex.springAPI.application.usecases;
 
-import br.com.alex.springAPI.domain.interfaces.IStudentRepository;
-import br.com.alex.springAPI.domain.interfaces.IWorkoutRepository;
+import br.com.alex.springAPI.application.interfaces.IStudentRepository;
+import br.com.alex.springAPI.application.interfaces.IWorkoutRepository;
 import br.com.alex.springAPI.domain.valueObjects.StudentId;
 
 import br.com.alex.springAPI.application.exception.NotFoundError;

@@ -5,7 +5,7 @@ import br.com.alex.springAPI.application.input.PageRequestApplication;
 import br.com.alex.springAPI.domain.valueObjects.WorkoutDetail;
 import br.com.alex.springAPI.domain.Exercise;
 import br.com.alex.springAPI.domain.Workout;
-import br.com.alex.springAPI.domain.interfaces.IWorkoutRepository;
+import br.com.alex.springAPI.application.interfaces.IWorkoutRepository;
 import br.com.alex.springAPI.domain.valueObjects.Pagination;
 import br.com.alex.springAPI.domain.valueObjects.StudentId;
 import br.com.alex.springAPI.domain.valueObjects.WorkoutId;
@@ -23,7 +23,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
-import java.awt.font.TextHitInfo;
 import java.util.*;
 import java.util.stream.Collectors;
 

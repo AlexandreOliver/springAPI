@@ -1,4 +1,4 @@
-package br.com.alex.springAPI.domain.interfaces;
+package br.com.alex.springAPI.application.interfaces;
 
 import br.com.alex.springAPI.domain.PhysicalAssessment;
 import br.com.alex.springAPI.domain.valueObjects.PhisicalAssessmentId;

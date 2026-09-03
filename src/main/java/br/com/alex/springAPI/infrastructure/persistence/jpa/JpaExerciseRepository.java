@@ -1,6 +1,6 @@
 package br.com.alex.springAPI.infrastructure.persistence.jpa;
 
-import br.com.alex.springAPI.domain.interfaces.IExerciseRepository;
+import br.com.alex.springAPI.application.interfaces.IExerciseRepository;
 import br.com.alex.springAPI.domain.Exercise;
 import br.com.alex.springAPI.domain.valueObjects.ExerciseId;
 import br.com.alex.springAPI.infrastructure.persistence.jpa.entity.ExerciseEntity;

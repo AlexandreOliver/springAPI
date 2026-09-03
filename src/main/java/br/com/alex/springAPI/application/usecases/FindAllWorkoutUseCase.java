@@ -4,7 +4,7 @@ package br.com.alex.springAPI.application.usecases;
 import br.com.alex.springAPI.application.input.FindAllCommand;
 import br.com.alex.springAPI.application.output.WorkoutOutput;
 import br.com.alex.springAPI.domain.Workout;
-import br.com.alex.springAPI.domain.interfaces.IWorkoutRepository;
+import br.com.alex.springAPI.application.interfaces.IWorkoutRepository;
 import br.com.alex.springAPI.domain.valueObjects.Pagination;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

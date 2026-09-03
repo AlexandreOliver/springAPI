@@ -2,9 +2,9 @@ package br.com.alex.springAPI.application.usecases;
 
 import br.com.alex.springAPI.domain.Exercise;
 import br.com.alex.springAPI.domain.Workout;
-import br.com.alex.springAPI.domain.interfaces.IExerciseRepository;
-import br.com.alex.springAPI.domain.interfaces.IStudentRepository;
-import br.com.alex.springAPI.domain.interfaces.IWorkoutRepository;
+import br.com.alex.springAPI.application.interfaces.IExerciseRepository;
+import br.com.alex.springAPI.application.interfaces.IStudentRepository;
+import br.com.alex.springAPI.application.interfaces.IWorkoutRepository;
 import br.com.alex.springAPI.domain.valueObjects.ExerciseId;
 import br.com.alex.springAPI.domain.valueObjects.WorkoutId;
 

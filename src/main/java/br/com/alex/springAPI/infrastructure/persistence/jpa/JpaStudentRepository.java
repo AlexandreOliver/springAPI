@@ -1,7 +1,7 @@
 package br.com.alex.springAPI.infrastructure.persistence.jpa;
 
 import br.com.alex.springAPI.domain.Student;
-import br.com.alex.springAPI.domain.interfaces.IStudentRepository;
+import br.com.alex.springAPI.application.interfaces.IStudentRepository;
 import br.com.alex.springAPI.domain.valueObjects.StudentId;
 
 import br.com.alex.springAPI.infrastructure.persistence.jpa.entity.StudentEntity;

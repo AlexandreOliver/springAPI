@@ -1,6 +1,6 @@
 package br.com.alex.springAPI.infrastructure.persistence.jpa;
 
-import br.com.alex.springAPI.domain.interfaces.IPhisicalAssessmentRepository;
+import br.com.alex.springAPI.application.interfaces.IPhisicalAssessmentRepository;
 import br.com.alex.springAPI.domain.PhysicalAssessment;
 import br.com.alex.springAPI.domain.valueObjects.PhisicalAssessmentId;
 

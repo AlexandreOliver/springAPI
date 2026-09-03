@@ -4,7 +4,7 @@ import br.com.alex.springAPI.application.exception.DuplicatedEmail;
 import br.com.alex.springAPI.application.input.CreateStudentInput;
 import br.com.alex.springAPI.application.output.StudentOutput;
 import br.com.alex.springAPI.domain.Student;
-import br.com.alex.springAPI.domain.interfaces.IStudentRepository;
+import br.com.alex.springAPI.application.interfaces.IStudentRepository;
 import br.com.alex.springAPI.domain.valueObjects.StudentId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package br.com.alex.springAPI.domain.interfaces;
+package br.com.alex.springAPI.application.interfaces;
 
 import java.util.List;
 import java.util.Optional;

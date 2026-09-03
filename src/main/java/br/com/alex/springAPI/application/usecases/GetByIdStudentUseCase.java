@@ -3,7 +3,7 @@ package br.com.alex.springAPI.application.usecases;
 import br.com.alex.springAPI.application.exception.NotFoundError;
 import br.com.alex.springAPI.application.output.StudentOutput;
 import br.com.alex.springAPI.domain.Student;
-import br.com.alex.springAPI.domain.interfaces.IStudentRepository;
+import br.com.alex.springAPI.application.interfaces.IStudentRepository;
 import br.com.alex.springAPI.domain.valueObjects.StudentId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
