@@ -1,6 +1,5 @@
 package br.com.alex.springAPI.infrastructure.persistence.jpa.interfaces;
 
-
 import br.com.alex.springAPI.infrastructure.persistence.jpa.projections.WorkoutDetailProjection;
 import br.com.alex.springAPI.infrastructure.persistence.jpa.entity.WorkoutEntity;
 
@@ -9,16 +8,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 public interface IWorkoutEntityRepository extends JpaRepository<WorkoutEntity, UUID> {
 
-  List<WorkoutEntity> findByStudent_Id(UUID id);
+  Page<WorkoutEntity> findByStudent_Id(UUID id, Pageable pageable);
 
   @Query("SELECT w FROM WorkoutEntity w LEFT JOIN FETCH w.exercises WHERE w.student.id = :id")
-  List<WorkoutEntity> findByStudent_IdWithExercise(UUID id);
+  Page<WorkoutEntity> findByStudent_IdWithExercise(UUID id, Pageable pageable);
 
   @Query(value = """
     SELECT
@@ -33,7 +31,7 @@ public interface IWorkoutEntityRepository extends JpaRepository<WorkoutEntity, U
     WHERE wE.name LIKE %:query% OR wE.objective LIKE %:query%
       """
   )
-  Page<WorkoutEntity> findAllWithFilter(String query, Pageable pageable);
+  Page<WorkoutEntity> findAllWithQuery(String query, Pageable pageable);
 
   @Query("""
     SELECT

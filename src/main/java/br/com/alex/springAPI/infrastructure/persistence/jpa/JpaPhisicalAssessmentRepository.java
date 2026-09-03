@@ -1,5 +1,7 @@
 package br.com.alex.springAPI.infrastructure.persistence.jpa;
 
+import br.com.alex.springAPI.application.dtos.Pagination;
+import br.com.alex.springAPI.application.dtos.PageApplication;
 import br.com.alex.springAPI.application.interfaces.IPhisicalAssessmentRepository;
 import br.com.alex.springAPI.domain.PhysicalAssessment;
 import br.com.alex.springAPI.domain.valueObjects.PhisicalAssessmentId;
@@ -8,9 +10,10 @@ import br.com.alex.springAPI.infrastructure.persistence.jpa.entity.PhisicalAsses
 
 import br.com.alex.springAPI.infrastructure.persistence.jpa.interfaces.IPhisicalAssessmentEntityRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -26,9 +29,22 @@ public class JpaPhisicalAssessmentRepository implements IPhisicalAssessmentRepos
   }
 
   @Override
-  public List<PhysicalAssessment> findAll() {
+  public Pagination<PhysicalAssessment> findAll(PageApplication requestPage) {
 
-    return this.assessmentEntityRepository.findAll().stream().map(PhisicalAssessmentEntity::toDomain).toList();
+    Page<PhisicalAssessmentEntity> assessmentEntities = this.assessmentEntityRepository.findAll(
+        PageRequest.of(requestPage.page() - 1,
+            requestPage.size())
+    );
+
+    Pagination<PhysicalAssessment> pagination = Pagination.<PhysicalAssessment>builder()
+        .contents(assessmentEntities.getContent().stream().map(PhisicalAssessmentEntity::toDomain).toList())
+        .pageCurrent(assessmentEntities.getNumber() + 1)
+        .pageSize(assessmentEntities.getSize())
+        .totalElements((int) assessmentEntities.getTotalElements())
+        .totalPages(assessmentEntities.getTotalPages())
+        .build();
+
+    return pagination;
   }
 
   @Override

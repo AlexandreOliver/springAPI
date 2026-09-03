@@ -1,5 +1,7 @@
 package br.com.alex.springAPI.infrastructure.http.controllers;
 
+import br.com.alex.springAPI.application.dtos.Pagination;
+import br.com.alex.springAPI.application.dtos.PageApplication;
 import br.com.alex.springAPI.application.dtos.output.ExerciseOutput;
 import br.com.alex.springAPI.application.usecases.*;
 
@@ -16,7 +18,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController()
@@ -31,12 +32,12 @@ public class ExerciseController {
   private final GetByIdExerciseUseCase getByIdUseCase;
   private final FindAllExerciseUseCase findAllExerciseUseCase;
 
-  @GetMapping
+  @GetMapping("/page/{page}/size/{size}")
   @ResponseStatus(HttpStatus.OK)
   @Operation(summary = "Obtém todos os exercícios", description = "Retorna uma lista de todos os exercícios")
-  public List<ExerciseOutput> GET() {
+  public Pagination<ExerciseOutput> GET(@PathVariable int page, @PathVariable int size) {
 
-    return this.findAllExerciseUseCase.execute();
+    return this.findAllExerciseUseCase.execute(new PageApplication(page, size));
   }
 
   @PostMapping

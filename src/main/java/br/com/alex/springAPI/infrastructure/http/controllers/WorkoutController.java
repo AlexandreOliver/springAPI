@@ -1,8 +1,8 @@
 package br.com.alex.springAPI.infrastructure.http.controllers;
 
 import br.com.alex.springAPI.application.exception.NotFoundError;
-import br.com.alex.springAPI.application.dtos.input.FindAllCommand;
-import br.com.alex.springAPI.application.dtos.input.PageRequestApplication;
+import br.com.alex.springAPI.application.dtos.input.FindWithQueryCommand;
+import br.com.alex.springAPI.application.dtos.PageApplication;
 import br.com.alex.springAPI.application.dtos.output.WorkoutDetailOutput;
 import br.com.alex.springAPI.application.dtos.output.WorkoutOutput;
 import br.com.alex.springAPI.application.usecases.CreateWorkoutUseCase;
@@ -60,7 +60,7 @@ public class WorkoutController {
       @Parameter(name = "query", description = "Parâmetro de pesquisa opcional para filtrar os treinos")
       @RequestParam(required = false) Optional<String> query) {
 
-    return this.allWorkoutUseCase.execute(new FindAllCommand(page, size, query.orElse(null)));
+    return this.allWorkoutUseCase.execute(new FindWithQueryCommand(page, size, query.orElse(null)));
   }
 
   @DeleteMapping("/{id}")
@@ -76,6 +76,6 @@ public class WorkoutController {
   @Operation(summary = "Obtém detalhes de treinos", description = "Retorna uma lista paginada de detalhes de treinos")
   public Pagination<WorkoutDetailOutput> GET_DETAIL(@RequestParam(defaultValue = "1", required = false) int page, @RequestParam(defaultValue = "10", required = false) int size) {
 
-    return this.workoutDetailUseCase.execute(new PageRequestApplication(page, size));
+    return this.workoutDetailUseCase.execute(new PageApplication(page, size));
   }
 }

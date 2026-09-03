@@ -1,7 +1,7 @@
 package br.com.alex.springAPI.infrastructure.persistence.jpa;
 
 
-import br.com.alex.springAPI.application.dtos.input.PageRequestApplication;
+import br.com.alex.springAPI.application.dtos.PageApplication;
 import br.com.alex.springAPI.application.dtos.WorkoutDetail;
 import br.com.alex.springAPI.domain.Exercise;
 import br.com.alex.springAPI.domain.Workout;
@@ -20,6 +20,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
@@ -48,14 +49,25 @@ public class JpaWorkoutRepository implements IWorkoutRepository {
   }
 
   @Override
-  public List<Workout> findAll() {
-    return List.of();
+  public Pagination<Workout> findAll(PageApplication requestPage) {
+
+    var pageInDb = this.workoutEntityRepository.findAll(PageRequest.of(requestPage.page() - 1, requestPage.size()));
+
+    Pagination<Workout> workoutPagination = Pagination.<Workout>builder()
+        .pageSize(pageInDb.getSize())
+        .totalPages(pageInDb.getTotalPages())
+        .totalElements((int) pageInDb.getTotalElements())
+        .pageCurrent(pageInDb.getNumber() + 1)
+        .contents(pageInDb.getContent().stream().map(WorkoutEntity::toDomain).toList())
+        .build();
+
+    return workoutPagination;
   }
 
   @Override
-  public Pagination<Workout> findAll(PageRequestApplication requestPage, Optional<String> query) {
+  public Pagination<Workout> findAllWithQuery(PageApplication requestPage, Optional<String> query) {
 
-    var pageInDb = this.workoutEntityRepository.findAllWithFilter(query.orElse(""), PageRequest.of(requestPage.page() - 1, requestPage.size()));
+    var pageInDb = this.workoutEntityRepository.findAllWithQuery(query.orElse(""), PageRequest.of(requestPage.page() - 1, requestPage.size()));
 
     Pagination<Workout> workoutPagination = Pagination.<Workout>builder()
         .pageSize(pageInDb.getSize())
@@ -79,14 +91,29 @@ public class JpaWorkoutRepository implements IWorkoutRepository {
   }
 
   @Override
-  public List<Workout> findByStudentId(StudentId id, boolean includeExercise) {
-    List<Workout> workouts;
+  public Pagination<Workout> findByStudentId(StudentId id, boolean includeExercise, PageApplication requestPage) {
+    Pagination<Workout> workouts;
+    Page<WorkoutEntity> workoutPage;
 
     if (includeExercise) {
-      workouts = this.workoutEntityRepository.findByStudent_IdWithExercise(id.uuid()).stream().map(WorkoutEntity::toDomain).toList();
+      workoutPage = this.workoutEntityRepository.findByStudent_IdWithExercise(
+          id.uuid(),
+          PageRequest.of(requestPage.page() - 1, requestPage.size())
+      );
     } else {
-      workouts = this.workoutEntityRepository.findByStudent_Id(id.uuid()).stream().map(WorkoutEntity::toDomain).toList();
+      workoutPage = this.workoutEntityRepository.findByStudent_Id(
+          id.uuid(),
+          PageRequest.of(requestPage.page() - 1, requestPage.size())
+      );
     }
+
+    workouts = Pagination.<Workout>builder()
+        .pageSize(workoutPage.getSize())
+        .totalPages(workoutPage.getTotalPages())
+        .totalElements((int) workoutPage.getTotalElements())
+        .pageCurrent(workoutPage.getNumber() + 1)
+        .contents(workoutPage.getContent().stream().map(WorkoutEntity::toDomain).toList())
+        .build();
 
     return workouts;
   }

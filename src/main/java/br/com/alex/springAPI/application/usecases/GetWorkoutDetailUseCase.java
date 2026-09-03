@@ -1,7 +1,7 @@
 package br.com.alex.springAPI.application.usecases;
 
 import br.com.alex.springAPI.application.dtos.WorkoutDetail;
-import br.com.alex.springAPI.application.dtos.input.PageRequestApplication;
+import br.com.alex.springAPI.application.dtos.PageApplication;
 import br.com.alex.springAPI.application.dtos.output.ExerciseOutput;
 import br.com.alex.springAPI.application.dtos.output.WorkoutDetailOutput;
 import br.com.alex.springAPI.domain.Exercise;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class GetWorkoutDetailUseCase {
     private final IWorkoutRepository workoutRepository;
 
-    public Pagination<WorkoutDetailOutput> execute(PageRequestApplication pagination) {
+    public Pagination<WorkoutDetailOutput> execute(PageApplication pagination) {
 
       Pagination<WorkoutDetail> workouts = this.workoutRepository.findAllWorkoutDetail(pagination.page(), pagination.size());
 

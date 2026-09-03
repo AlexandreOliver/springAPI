@@ -1,9 +1,10 @@
 package br.com.alex.springAPI.application.interfaces;
 
+import br.com.alex.springAPI.application.dtos.Pagination;
+import br.com.alex.springAPI.application.dtos.PageApplication;
 import br.com.alex.springAPI.domain.Student;
 import br.com.alex.springAPI.domain.valueObjects.StudentId;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface IStudentRepository extends IRepositoryDomain<Student, StudentId> {
@@ -12,7 +13,9 @@ public interface IStudentRepository extends IRepositoryDomain<Student, StudentId
 
   Optional<Student> findByIdWithAssessment(StudentId id);
 
-  List<Student> findAllWithAssessment();
+  Pagination<Student> findAllWithAssessment(PageApplication requestPage);
 
   boolean existsByStudentId(StudentId id);
+
+  Pagination<Student> findAllWithQuery(PageApplication requestPage, Optional<String> query);
 }

@@ -1,5 +1,7 @@
 package br.com.alex.springAPI.application.usecases;
 
+import br.com.alex.springAPI.application.dtos.Pagination;
+import br.com.alex.springAPI.application.dtos.PageApplication;
 import br.com.alex.springAPI.application.interfaces.IExerciseRepository;
 
 import br.com.alex.springAPI.application.dtos.output.ExerciseOutput;
@@ -7,16 +9,14 @@ import br.com.alex.springAPI.application.dtos.output.ExerciseOutput;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @AllArgsConstructor
 @Service
 public class FindAllExerciseUseCase {
 
   private final IExerciseRepository exerciseRepository;
 
-  public List<ExerciseOutput> execute() {
+  public Pagination<ExerciseOutput> execute(PageApplication page) {
 
-    return exerciseRepository.findAll().stream().map(ExerciseOutput::of).toList();
+    return exerciseRepository.findAll(page).map(ExerciseOutput::of);
   }
 }

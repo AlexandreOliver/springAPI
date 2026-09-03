@@ -1,5 +1,7 @@
 package br.com.alex.springAPI.infrastructure.persistence.jpa;
 
+import br.com.alex.springAPI.application.dtos.Pagination;
+import br.com.alex.springAPI.application.dtos.PageApplication;
 import br.com.alex.springAPI.domain.Student;
 import br.com.alex.springAPI.application.interfaces.IStudentRepository;
 import br.com.alex.springAPI.domain.valueObjects.StudentId;
@@ -8,9 +10,10 @@ import br.com.alex.springAPI.infrastructure.persistence.jpa.entity.StudentEntity
 
 import br.com.alex.springAPI.infrastructure.persistence.jpa.interfaces.IStudentEntityRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -31,13 +34,57 @@ public class JpaStudentRepository implements IStudentRepository {
   }
 
   @Override
-  public List<Student> findAll() {
-    return this.studentEntityRepository.findAll().stream().map(StudentEntity::toDomain).toList();
+  public Pagination<Student> findAll(PageApplication requestPage) {
+
+    Page<StudentEntity> studentEntities = this.studentEntityRepository.findAll(
+        PageRequest.of(requestPage.page() - 1, requestPage.size())
+    );
+
+    Pagination<Student> pagination = Pagination.<Student>builder()
+        .contents(studentEntities.getContent().stream().map(StudentEntity::toDomain).toList())
+        .totalElements((int) studentEntities.getTotalElements())
+        .totalPages(studentEntities.getTotalPages())
+        .pageCurrent(studentEntities.getNumber() + 1)
+        .pageSize(studentEntities.getSize())
+        .build();
+
+
+    return pagination;
   }
 
   @Override
-  public List<Student> findAllWithAssessment() {
-    return this.studentEntityRepository.findAllWithAssessment().stream().map(StudentEntity::toDomain).toList();
+  public Pagination<Student> findAllWithQuery(PageApplication requestPage, Optional<String> query) {
+
+    Page<StudentEntity> studentEntities = this.studentEntityRepository.findAllWithQuery(
+        PageRequest.of(requestPage.page() - 1, requestPage.size()),
+        query.orElse("")
+    );
+
+    Pagination<Student> pagination = Pagination.<Student>builder()
+            .contents(studentEntities.getContent().stream().map(StudentEntity::toDomain).toList())
+            .totalElements((int) studentEntities.getTotalElements())
+            .totalPages(studentEntities.getTotalPages())
+            .pageCurrent(studentEntities.getNumber() + 1)
+            .pageSize(studentEntities.getSize())
+            .build();
+
+
+    return pagination;
+  }
+
+  @Override
+  public Pagination<Student> findAllWithAssessment(PageApplication requestPage) {
+    Page<StudentEntity> studentEntities = this.studentEntityRepository.findAllWithAssessment(
+        PageRequest.of(requestPage.page() - 1, requestPage.size())
+    );
+
+    return Pagination.<Student>builder()
+            .contents(studentEntities.getContent().stream().map(StudentEntity::toDomain).toList())
+            .totalElements((int) studentEntities.getTotalElements())
+            .totalPages(studentEntities.getTotalPages())
+            .pageCurrent(studentEntities.getNumber() + 1)
+            .pageSize(studentEntities.getSize())
+            .build();
   }
 
   @Override

@@ -1,5 +1,7 @@
 package br.com.alex.springAPI.infrastructure.http.controllers;
 
+import br.com.alex.springAPI.application.dtos.Pagination;
+import br.com.alex.springAPI.application.dtos.PageApplication;
 import br.com.alex.springAPI.domain.valueObjects.StudentId;
 
 import br.com.alex.springAPI.application.dtos.output.WorkoutOutput;
@@ -28,7 +30,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -59,20 +60,24 @@ public class StudentController {
     return new OnlyMessageResponse("Aluno criado com sucesso");
   };
 
- @GetMapping
+ @GetMapping("/page/{page}/size/{size}")
  @ResponseStatus(HttpStatus.OK)
  @Operation(summary = "Lista todos os alunos", description = "Retorna uma lista dos alunos")
- public ResponseEntity<?> GET_ALL(
+ public ResponseEntity<Pagination<?>> GET_ALL(
+     @PathVariable int page,
+     @PathVariable int size,
      @Parameter(description = "Parâmetro opcional para incluir informações de avaliação")
      @RequestParam(required = false) String include
  ) {
 
+   PageApplication pageRequest = new PageApplication(page, size);
+
    if ("assessment".equalsIgnoreCase(include)) {
-     List<StudentOutput> students = this.getAllUseCase.execute(true);
+     Pagination<StudentOutput> students = this.getAllUseCase.execute(pageRequest, true);
 
      return ResponseEntity.ok(students);
    } else {
-      List<StudentSummaryResponse> studentSummaryOutputs = this.getAllUseCase.execute(false).stream().map(StudentSummaryResponse::of).toList();
+      Pagination<StudentSummaryResponse> studentSummaryOutputs = this.getAllUseCase.execute(pageRequest, false).map(StudentSummaryResponse::of);
 
       return ResponseEntity.ok(studentSummaryOutputs);
    }
@@ -160,17 +165,22 @@ public class StudentController {
   @GetMapping("/{id}/workout")
   @ResponseStatus(HttpStatus.OK)
   @Operation(summary = "Obtém os treinos de um aluno", description = "Retorna uma lista de treinos de um aluno específico pelo ID")
-  public List<WorkoutOutput> GET_WORKOUT(
+  public Pagination<WorkoutOutput> GET_WORKOUT(
       @PathVariable UUID id,
       @Parameter(description = "Parâmetro opcional para incluir informações dos exercícios do treino")
-      @RequestParam(required = false) String include) {
+      @RequestParam(required = false) String include,
+      @RequestParam(defaultValue = "1") int page,
+      @RequestParam(defaultValue = "10") int size
+      ) {
+
+   PageApplication pageRequest = new PageApplication(page, size);
 
    try {
 
      if ("exercises".equalsIgnoreCase(include)) {
-       return this.workoutByStudentIdUseCase.execute(new StudentId(id), true);
+       return this.workoutByStudentIdUseCase.execute(new StudentId(id), true, pageRequest);
      } else {
-       return this.workoutByStudentIdUseCase.execute(new StudentId(id), false);
+       return this.workoutByStudentIdUseCase.execute(new StudentId(id), false, pageRequest);
      }
    } catch (NotFoundError e) {
      throw new BadRequestException(e.getMessage(), "Corrija a request");

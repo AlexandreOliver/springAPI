@@ -1,6 +1,6 @@
 package br.com.alex.springAPI.application.interfaces;
 
-import br.com.alex.springAPI.application.dtos.input.PageRequestApplication;
+import br.com.alex.springAPI.application.dtos.PageApplication;
 import br.com.alex.springAPI.domain.Exercise;
 import br.com.alex.springAPI.domain.Workout;
 
@@ -9,18 +9,17 @@ import br.com.alex.springAPI.application.dtos.Pagination;
 import br.com.alex.springAPI.domain.valueObjects.StudentId;
 import br.com.alex.springAPI.domain.valueObjects.WorkoutId;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
 public interface IWorkoutRepository extends IRepositoryDomain<Workout, WorkoutId> {
 
-  List<Workout> findByStudentId(StudentId id, boolean includeExercise);
+  Pagination<Workout> findByStudentId(StudentId id, boolean includeExercise, PageApplication requestPage);
 
   Pagination<WorkoutDetail> findAllWorkoutDetail(int page, int size);
 
   Map<WorkoutId, Set<Exercise>> findAllExerciseByWorkoutIds(Set<WorkoutId> ids);
 
-  Pagination<Workout> findAll(PageRequestApplication requestPage, Optional<String> query);
+  Pagination<Workout> findAllWithQuery(PageApplication requestPage, Optional<String> query);
 }
