@@ -1,6 +1,6 @@
 package br.com.alex.springAPI.application.exception;
 
-import br.com.alex.springAPI.application.input.CreatePhisicalAssessmentInput;
+import br.com.alex.springAPI.application.dtos.input.CreatePhisicalAssessmentInput;
 import lombok.Getter;
 
 @Getter

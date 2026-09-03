@@ -1,6 +1,6 @@
 package br.com.alex.springAPI.application.usecases;
 
-import br.com.alex.springAPI.application.output.StudentOutput;
+import br.com.alex.springAPI.application.dtos.output.StudentOutput;
 import br.com.alex.springAPI.application.interfaces.IStudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

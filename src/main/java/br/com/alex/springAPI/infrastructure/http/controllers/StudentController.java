@@ -2,12 +2,12 @@ package br.com.alex.springAPI.infrastructure.http.controllers;
 
 import br.com.alex.springAPI.domain.valueObjects.StudentId;
 
-import br.com.alex.springAPI.application.output.WorkoutOutput;
+import br.com.alex.springAPI.application.dtos.output.WorkoutOutput;
 import br.com.alex.springAPI.application.exception.DuplicatedAssessmentError;
 import br.com.alex.springAPI.application.exception.DuplicatedEmail;
 import br.com.alex.springAPI.application.exception.NotFoundError;
-import br.com.alex.springAPI.application.output.AssessmentOutput;
-import br.com.alex.springAPI.application.output.StudentOutput;
+import br.com.alex.springAPI.application.dtos.output.AssessmentOutput;
+import br.com.alex.springAPI.application.dtos.output.StudentOutput;
 import br.com.alex.springAPI.application.usecases.*;
 
 import br.com.alex.springAPI.infrastructure.http.exception.BadRequestException;

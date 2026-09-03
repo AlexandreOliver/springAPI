@@ -1,4 +1,4 @@
-package br.com.alex.springAPI.application.input;
+package br.com.alex.springAPI.application.dtos.input;
 
 import java.util.Optional;
 

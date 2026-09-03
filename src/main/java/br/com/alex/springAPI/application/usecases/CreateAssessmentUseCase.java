@@ -8,7 +8,7 @@ import br.com.alex.springAPI.domain.valueObjects.PhisicalAssessmentId;
 import br.com.alex.springAPI.domain.valueObjects.StudentId;
 
 import br.com.alex.springAPI.application.exception.NotFoundError;
-import br.com.alex.springAPI.application.input.CreatePhisicalAssessmentInput;
+import br.com.alex.springAPI.application.dtos.input.CreatePhisicalAssessmentInput;
 import br.com.alex.springAPI.application.exception.DuplicatedAssessmentError;
 
 import lombok.RequiredArgsConstructor;

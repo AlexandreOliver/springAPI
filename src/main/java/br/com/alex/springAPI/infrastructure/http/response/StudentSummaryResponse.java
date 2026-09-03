@@ -1,7 +1,6 @@
 package br.com.alex.springAPI.infrastructure.http.response;
 
-import br.com.alex.springAPI.application.output.StudentOutput;
-import br.com.alex.springAPI.domain.Student;
+import br.com.alex.springAPI.application.dtos.output.StudentOutput;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 

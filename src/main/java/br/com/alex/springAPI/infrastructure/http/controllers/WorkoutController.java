@@ -1,10 +1,10 @@
 package br.com.alex.springAPI.infrastructure.http.controllers;
 
 import br.com.alex.springAPI.application.exception.NotFoundError;
-import br.com.alex.springAPI.application.input.FindAllCommand;
-import br.com.alex.springAPI.application.input.PageRequestApplication;
-import br.com.alex.springAPI.application.output.WorkoutDetailOutput;
-import br.com.alex.springAPI.application.output.WorkoutOutput;
+import br.com.alex.springAPI.application.dtos.input.FindAllCommand;
+import br.com.alex.springAPI.application.dtos.input.PageRequestApplication;
+import br.com.alex.springAPI.application.dtos.output.WorkoutDetailOutput;
+import br.com.alex.springAPI.application.dtos.output.WorkoutOutput;
 import br.com.alex.springAPI.application.usecases.CreateWorkoutUseCase;
 import br.com.alex.springAPI.application.usecases.DeleteWorkoutUseCase;
 import br.com.alex.springAPI.application.usecases.FindAllWorkoutUseCase;

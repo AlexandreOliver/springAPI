@@ -9,8 +9,8 @@ import br.com.alex.springAPI.domain.valueObjects.ExerciseId;
 import br.com.alex.springAPI.domain.valueObjects.WorkoutId;
 
 import br.com.alex.springAPI.application.exception.NotFoundError;
-import br.com.alex.springAPI.application.input.CreateWorkoutInput;
-import br.com.alex.springAPI.application.output.WorkoutOutput;
+import br.com.alex.springAPI.application.dtos.input.CreateWorkoutInput;
+import br.com.alex.springAPI.application.dtos.output.WorkoutOutput;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

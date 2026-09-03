@@ -1,6 +1,6 @@
 package br.com.alex.springAPI.infrastructure.http.request;
 
-import br.com.alex.springAPI.application.input.CreateWorkoutInput;
+import br.com.alex.springAPI.application.dtos.input.CreateWorkoutInput;
 import br.com.alex.springAPI.domain.valueObjects.StudentId;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

@@ -1,9 +1,8 @@
 package br.com.alex.springAPI.infrastructure.http.request;
 
-import br.com.alex.springAPI.application.input.UpdateExerciseInput;
+import br.com.alex.springAPI.application.dtos.input.UpdateExerciseInput;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 

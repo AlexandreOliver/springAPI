@@ -5,7 +5,7 @@ import br.com.alex.springAPI.application.interfaces.IWorkoutRepository;
 import br.com.alex.springAPI.domain.valueObjects.StudentId;
 
 import br.com.alex.springAPI.application.exception.NotFoundError;
-import br.com.alex.springAPI.application.output.WorkoutOutput;
+import br.com.alex.springAPI.application.dtos.output.WorkoutOutput;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

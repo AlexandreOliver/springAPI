@@ -1,4 +1,4 @@
-package br.com.alex.springAPI.application.input;
+package br.com.alex.springAPI.application.dtos.input;
 
 import br.com.alex.springAPI.domain.valueObjects.StudentId;
 import lombok.Builder;

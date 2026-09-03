@@ -1,6 +1,6 @@
 package br.com.alex.springAPI.infrastructure.http.request;
 
-import br.com.alex.springAPI.application.input.CreateExerciseInput;
+import br.com.alex.springAPI.application.dtos.input.CreateExerciseInput;
 import jakarta.validation.constraints.*;
 import lombok.Builder;
 

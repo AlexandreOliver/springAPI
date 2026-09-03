@@ -1,9 +1,9 @@
 package br.com.alex.springAPI.application.usecases;
 
 import br.com.alex.springAPI.domain.valueObjects.WorkoutDetail;
-import br.com.alex.springAPI.application.input.PageRequestApplication;
-import br.com.alex.springAPI.application.output.ExerciseOutput;
-import br.com.alex.springAPI.application.output.WorkoutDetailOutput;
+import br.com.alex.springAPI.application.dtos.input.PageRequestApplication;
+import br.com.alex.springAPI.application.dtos.output.ExerciseOutput;
+import br.com.alex.springAPI.application.dtos.output.WorkoutDetailOutput;
 import br.com.alex.springAPI.domain.Exercise;
 import br.com.alex.springAPI.application.interfaces.IWorkoutRepository;
 import br.com.alex.springAPI.domain.valueObjects.Pagination;

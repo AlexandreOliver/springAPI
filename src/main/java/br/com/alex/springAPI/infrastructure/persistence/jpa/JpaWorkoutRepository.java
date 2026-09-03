@@ -1,7 +1,7 @@
 package br.com.alex.springAPI.infrastructure.persistence.jpa;
 
 
-import br.com.alex.springAPI.application.input.PageRequestApplication;
+import br.com.alex.springAPI.application.dtos.input.PageRequestApplication;
 import br.com.alex.springAPI.domain.valueObjects.WorkoutDetail;
 import br.com.alex.springAPI.domain.Exercise;
 import br.com.alex.springAPI.domain.Workout;

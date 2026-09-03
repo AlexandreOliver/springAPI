@@ -1,7 +1,7 @@
 package br.com.alex.springAPI.application.usecases;
 
 import br.com.alex.springAPI.application.exception.NotFoundError;
-import br.com.alex.springAPI.application.output.ExerciseOutput;
+import br.com.alex.springAPI.application.dtos.output.ExerciseOutput;
 
 import br.com.alex.springAPI.application.interfaces.IExerciseRepository;
 import br.com.alex.springAPI.domain.valueObjects.ExerciseId;

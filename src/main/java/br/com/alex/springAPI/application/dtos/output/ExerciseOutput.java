@@ -1,4 +1,4 @@
-package br.com.alex.springAPI.application.output;
+package br.com.alex.springAPI.application.dtos.output;
 
 import br.com.alex.springAPI.domain.Exercise;
 import io.swagger.v3.oas.annotations.media.Schema;

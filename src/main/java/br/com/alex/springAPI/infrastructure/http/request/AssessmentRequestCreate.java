@@ -1,6 +1,6 @@
 package br.com.alex.springAPI.infrastructure.http.request;
 
-import br.com.alex.springAPI.application.input.CreatePhisicalAssessmentInput;
+import br.com.alex.springAPI.application.dtos.input.CreatePhisicalAssessmentInput;
 import br.com.alex.springAPI.domain.valueObjects.Price;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;

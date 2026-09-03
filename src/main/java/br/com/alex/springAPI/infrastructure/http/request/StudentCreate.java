@@ -1,6 +1,6 @@
 package br.com.alex.springAPI.infrastructure.http.request;
 
-import br.com.alex.springAPI.application.input.CreateStudentInput;
+import br.com.alex.springAPI.application.dtos.input.CreateStudentInput;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

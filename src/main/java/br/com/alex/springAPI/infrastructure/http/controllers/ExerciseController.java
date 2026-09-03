@@ -1,6 +1,6 @@
 package br.com.alex.springAPI.infrastructure.http.controllers;
 
-import br.com.alex.springAPI.application.output.ExerciseOutput;
+import br.com.alex.springAPI.application.dtos.output.ExerciseOutput;
 import br.com.alex.springAPI.application.usecases.*;
 
 import br.com.alex.springAPI.domain.valueObjects.ExerciseId;

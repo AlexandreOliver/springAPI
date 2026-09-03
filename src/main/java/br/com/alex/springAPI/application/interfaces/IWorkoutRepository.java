@@ -1,6 +1,6 @@
 package br.com.alex.springAPI.application.interfaces;
 
-import br.com.alex.springAPI.application.input.PageRequestApplication;
+import br.com.alex.springAPI.application.dtos.input.PageRequestApplication;
 import br.com.alex.springAPI.domain.Exercise;
 import br.com.alex.springAPI.domain.Workout;
 

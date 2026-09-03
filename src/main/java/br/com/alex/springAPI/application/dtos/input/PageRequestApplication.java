@@ -1,4 +1,4 @@
-package br.com.alex.springAPI.application.input;
+package br.com.alex.springAPI.application.dtos.input;
 
 import lombok.Builder;
 import org.springframework.util.Assert;
